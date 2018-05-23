@@ -23,7 +23,7 @@
 <p>PHP 5.4 增加了将闭包绑定到对象作用域中的特性，并改善其可调用性，如此即可在大部分情况下使用匿名函数取代一般的函数。</p>
 
 <ul>
-  <li>学习更多 <a href="/php-the-right-way/pages/Functional-Programming.html">PHP 函数式编程</a></li>
+  <li>学习更多 <a href="https://laravel-china.github.io/php-the-right-way/pages/Functional-Programming.html">PHP 函数式编程</a></li>
   <li><a href="http://php.net/functions.anonymous">阅读匿名函数</a></li>
   <li><a href="http://php.net/class.closure">阅读闭包类</a></li>
   <li><a href="https://wiki.php.net/rfc/closures">更多关于 Closures RFC</a></li>

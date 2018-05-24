@@ -184,7 +184,6 @@ class SubClass extends BaseClass {
 class OtherSubClass extends BaseClass {
     // inherits BaseClass's constructor
 }
-
 echo 'p001.5 类的构造函数的示例';
 echo "<br>";
 // In BaseClass constructor

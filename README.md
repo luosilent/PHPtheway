@@ -1,4 +1,54 @@
 # PHP The Right Way的学习笔记
+<section class="chapter" id="code_style_guide">
+    <h1 id="code_style_guide_title">代码风格指南</h1>
+
+<p>PHP 社区百花齐放，拥有大量的函数库、框架和组件。PHP 开发者通常会在自己的项目中使用若干个外部库，因此 PHP 代码遵循（尽可能接近）同一个代码风格就非常重要，这让开发者可以轻松地将多个代码库整合到自己的项目中。</p>
+
+<p><a href="https://psr.phphub.org/">PHP标准组</a> 提出并发布了一系列的风格建议。其中有部分是关于代码风格的，即 <a href="http://www.php-fig.org/psr/psr-0/">PSR-0</a>, <a href="https://laravel-china.org/topics/2078">PSR-1</a>, <a href="https://laravel-china.org/topics/2079">PSR-2</a> 和 <a href="https://laravel-china.org/topics/2081">PSR-4</a>。这些推荐只是一些被其他项目所遵循的规则，如 Drupal, Zend, Symfony, CakePHP, phpBB, AWS SDK, FuelPHP, Lithium 等。你可以把这些规则用在自己的项目中，或者继续使用自己的风格。</p>
+
+<p>通常情况下，你应该遵循一个已知的标准来编写 PHP 代码。可能是 PSR 的组合或者是 PEAR 或 Zend 编码准则中的一个。这代表其他开发者能够方便的阅读和使用你的代码，并且使用这些组件的应用程序可以和其他第三方的组件保持一致。</p>
+
+<ul>
+  <li><a href="http://www.php-fig.org/psr/psr-0/">阅读 PSR-0</a></li>
+  <li><a href="https://laravel-china.org/topics/2078">阅读 PSR-1</a></li>
+  <li><a href="https://laravel-china.org/topics/2079">阅读 PSR-2</a></li>
+  <li><a href="https://laravel-china.org/topics/2081">阅读 PSR-4</a></li>
+  <li><a href="http://pear.php.net/manual/en/standards.php">阅读 PEAR 编码准则</a></li>
+  <li><a href="http://symfony.com/doc/current/contributing/code/standards.html">阅读 Symfony 编码准则</a></li>
+</ul>
+
+<p>你可以使用 <a href="http://pear.php.net/package/PHP_CodeSniffer/">PHP_CodeSniffer</a> 来检查代码是否符合这些准则，文本编辑器 <a href="https://github.com/benmatselby/sublime-phpcs">Sublime Text</a> 的插件也可以提供实时检查。</p>
+
+<p>你可以通过任意以下两个工具来自动修正你的程序语法，让它符合标准：</p>
+
+<ul>
+  <li>一个是 <a href="http://cs.sensiolabs.org/">PHP Coding Standards Fixer</a>，它具有良好的测试。</li>
+  <li>另一个是随 PHP_CodeSniffer 安装的 <a href="https://github.com/squizlabs/PHP_CodeSniffer/wiki/Fixing-Errors-Automatically">PHP Code 美化修整器</a>。</li>
+</ul>
+
+<p>你也可以手动运行 phpcs 命令：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>phpcs -sw --standard=PSR2 file.php
+</code></pre>
+</div>
+
+<p>它会显示出相应的错误以及如何修正的方法。同时，这条命令你也可以用在 git hook 中，如果你的分支代码不符合选择的代码标准则无法提交。</p>
+
+<p>如果你已经安装了 PHP_CodeSniffer，你将可以使用
+<a href="https://github.com/squizlabs/PHP_CodeSniffer/wiki/Fixing-Errors-Automatically">PHP Code 美化修整器</a> 来格式化代码：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>phpcbf -w --standard=PSR2 file.php
+</code></pre>
+</div>
+
+<p>另一个选项是使用 <a href="http://cs.sensiolabs.org/">PHP 编码标准修复器</a>，他可以让你预览编码不合格的部分：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>php-cs-fixer fix -v --level=psr2 file.php
+</code></pre>
+</div>
+
+<p>所有的变量名称以及代码结构建议用英文编写。注释可以使用任何语言，只要让现在以及未来的小伙伴能够容易阅读理解即可。</p>
+
 <h2 id="programming_paradigms_title">编程范式</h2>
 
 <p>PHP 是一个灵活的动态语言，支持多种编程技巧。这几年一直不断的发展，重要的里程碑包含 PHP 5.0 (2004) 增加了完善的面向对象模型，PHP 5.3 (2009) 增加了匿名函数与命名空间以及 PHP 5.4 (2012) 增加的 traits。</p>

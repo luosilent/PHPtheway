@@ -147,7 +147,7 @@ echo "<hr>";
  * $obj2 = new MyClass2();
  * ?>
  */
-spl_autoload_register(function ($name) {
+/*spl_autoload_register(function ($name) {
     echo "Want to load $name.\n";
     echo "<br>";
     throw new MissingException("Unable to load $name.");
@@ -159,10 +159,40 @@ try {
     $obj = new NonLoadableClass();
 } catch (Exception $e) {
     echo $e->getMessage(), "\n";
-}
+}*/
 
 /**
  * PHP 5 允行开发者在一个类中定义一个方法作为构造函数。
  * 具有构造函数的类会在每次创建新对象时先调用此方法，所以非常适合在使用对象之前做一些初始化工作。
  */
 
+class BaseClass {
+    function __construct() {
+        print "In BaseClass constructor\n";
+        echo "<br>";
+    }
+}
+
+class SubClass extends BaseClass {
+    function __construct() {
+        parent::__construct();
+        print "In SubClass constructor\n";
+        echo "<br>";
+    }
+}
+
+class OtherSubClass extends BaseClass {
+    // inherits BaseClass's constructor
+}
+
+echo 'p001.5 类的构造函数的示例';
+echo "<br>";
+// In BaseClass constructor
+$obj = new BaseClass();
+
+// In BaseClass constructor
+// In SubClass constructor
+$obj = new SubClass();
+
+// In BaseClass constructor
+$obj = new OtherSubClass();

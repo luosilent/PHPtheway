@@ -327,6 +327,7 @@ class Item
 $item = new Item();
 $item->setLabel( 'apples');
 $item->setPrice(49.99);
+echo 'p001.8 类的示例';echo "<br>";
 print $item;
 echo "<hr>";
 
@@ -360,6 +361,7 @@ class bar extends foo
 
 $foo = new foo();
 $bar = new bar();
+echo 'p001.9 对象的继承';echo "<br>";
 $foo->printItem('baz'); // Output: 'Foo: baz'
 echo "<br>";
 $foo->printPHP();       // Output: 'PHP is great'
@@ -372,3 +374,102 @@ echo "<hr>";
 /**
  * 范围解析操作符 （::）
  */
+/**
+ * 范围解析操作符（也可称作 Paamayim Nekudotayim）或者更简单地说是一对冒号，
+ * 可以用于访问静态成员，类常量，还可以用于覆盖类中的属性和方法。
+ * 当在类定义之外引用到这些项目时，要使用类名
+ */
+
+class MyClassT {
+    const CONST_VALUE = 'A constant value';
+}
+
+$classname = 'MyClassT';
+echo 'p001.10  在类的外部使用 :: 操作符';echo "<br>";
+echo $classname::CONST_VALUE; // 自 PHP 5.3.0 起
+echo "<br>";
+echo MyClassT::CONST_VALUE;
+echo "<hr>";
+
+class OtherClass extends MyClassT
+{
+    public static $my_static = 'static var';
+
+    public static function doubleColon() {
+        echo parent::CONST_VALUE . "\n";
+        echo self::$my_static . "\n";
+    }
+}
+
+$classname = 'OtherClass';
+echo 'p001.11   在类定义内部使用 ::';echo "<br>";
+echo $classname::doubleColon(); // 自 PHP 5.3.0 起
+echo "<br>";
+OtherClass::doubleColon();
+echo "<hr>";
+
+
+class MyClassY
+{
+    protected function myFunc() {
+        echo "MyClassY::myFunc()\n";
+    }
+}
+
+class OtherClassY extends MyClassY
+{
+    // 覆盖了父类的定义
+    public function myFunc()
+    {
+        // 但还是可以调用父类中被覆盖的方法
+        parent::myFunc();
+        echo "OtherClassY::myFunc()\n";
+    }
+}
+echo 'p001.10 调用父类的方法';echo "<br>";
+$class = new OtherClassY();
+$class->myFunc();
+echo "<hr>";
+
+/**
+ * 声明类属性或方法为静态，就可以不实例化类而直接访问。
+ * 静态属性不能通过一个类已实例化的对象来访问（但静态方法可以）。
+ * 由于静态方法不需要通过对象即可调用，所以伪变量 $this 在静态方法中不可用。
+ * 静态属性不可以由对象通过 -> 操作符来访问。
+ * 用静态方式调用一个非静态方法会导致一个 E_STRICT 级别的错误。
+ * 就像其它所有的 PHP 静态变量一样，静态属性只能被初始化为文字或常量，不能使用表达式。
+ * 所以可以把静态属性初始化为整数或数组，但不能初始化为另一个变量或函数返回值，也不能指向一个对象。
+ * 自 PHP 5.3.0 起，可以用一个变量来动态调用类。但该变量的值不能为关键字 self，parent 或 static。
+ */
+class FooY
+{
+    public static $my_static = 'fooY';
+
+    public function staticValue() {
+        return self::$my_static;
+    }
+}
+
+class BarY extends FooY
+{
+    public function fooStatic() {
+        return parent::$my_static;
+    }
+}
+echo 'p001.11 静态属性示例';echo "<br>";
+
+print FooY::$my_static . "\n";
+
+$fooY = new FooY();
+print $fooY->staticValue() . "\n";
+//print $fooY->my_static . "\n";      // Undefined "Property" my_static
+
+print $fooY::$my_static . "\n";
+$classname = 'FooY';
+print $classname::$my_static . "\n"; // As of PHP 5.3.0
+
+print BarY::$my_static . "\n";
+$barY = new BarY();
+print $barY->fooStatic() . "\n";
+echo "<hr>";
+

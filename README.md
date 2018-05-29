@@ -210,3 +210,105 @@ Usage: php hello.php [name]
 </ul>
 
 </section>
+
+
+<section class="chapter" id="composer_and_packagist">
+    <h2 id="composer_and_packagist_title">Composer 与 Packagist</h2>
+
+<p>Composer 是一个 <strong>杰出</strong> 的依赖管理器。在 <code class="highlighter-rouge">composer.json</code> 文件中列出你项目所需的依赖包，加上一点简单的命令，Composer 将会自动帮你下载并设置你的项目依赖。Composer 有点类似于 Node.js 世界里的 NPM，或者 Ruby 世界里的 Bundler。</p>
+
+<p>现在已经有许多 PHP 第三方包已兼容 Composer，随时可以在你的项目中使用。这些「packages(包)」都已列在 <a href="http://packagist.org/">Packagist</a>，这是一个官方的 Composer 兼容包仓库。</p>
+
+<blockquote>
+  <p>为了提高国内 Composer 的使用体验，Laravel China 社区维护了 <a href="https://laravel-china.org/composer">Composer 中文镜像 /Packagist 中国全量镜像</a> ，此镜像使用了又拍云的 CDN 加速，将会极大加速 Composer 依赖的下载速度。</p>
+</blockquote>
+
+<h3 id="如何安装-composer">如何安装 Composer</h3>
+
+<p>最安全的下载方法就是使用 <a href="https://getcomposer.org/download/">官方的教程</a>。
+此方法会验证安装器是否安全，是否被修改。</p>
+
+<p>安装器安装 Composer 的应用范围为 <em>本地</em>，也就是在你当前项目文件夹。</p>
+
+<p>我们推荐你 <em>全局</em> 安装，即把可执行文件复制到 <code class="highlighter-rouge">/usr/local/bin</code> 路径中：</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="err">mv composer.phar /usr/local/bin/composer</span></code></pre></figure>
+
+<p><strong>注意:</strong> 以上命令如果失败，请尝试使用<code class="highlighter-rouge">sudo</code> 来增加权限。</p>
+
+<p><em>本地</em> 使用 Composer 的话，你可以运行 <code class="highlighter-rouge">php composer.phar</code> ，全局的话是：<code class="highlighter-rouge">composer</code>。</p>
+
+<h4 id="windows环境下安装">Windows环境下安装</h4>
+
+<p>对于Windows 的用户而言最简单的获取及执行方法就是使用 <a href="https://getcomposer.org/Composer-Setup.exe">ComposerSetup</a> 安装程序，它会执行一个全局安装并设置你的 <code class="highlighter-rouge">$PATH</code>，所以你在任意目录下在命令行中使用 <code class="highlighter-rouge">composer</code>。</p>
+
+<h3 id="如何手动安装-composer">如何手动安装 Composer</h3>
+
+<p>手动安装 Composer 是一个高端的技术。仅管如此还是有许多开发者有各种原因喜欢使用这种交互式的应用程序安装 Composer。在安装前请先确认你的 PHP 安装项目如下：</p>
+
+<ul>
+  <li>正在使用一个满足条件的 PHP 版本</li>
+  <li><code class="highlighter-rouge">.phar</code> 文件可以正确的被执行</li>
+  <li>相关的目录有足够的权限</li>
+  <li>相关有问题的扩展没有被载入</li>
+  <li>相关的 <code class="highlighter-rouge">php.ini</code> 设置已完成</li>
+</ul>
+
+<p>由于手动安装没有执行这些检查，你必须自已衡量决定是否值得做这些事，以下是如何手动安装 Composer ：</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console">curl -s https://getcomposer.org/composer.phar -o $HOME/local/bin/composer
+<span class="err">chmod +x $HOME/local/bin/composer</span></code></pre></figure>
+
+<p>路径 <code class="highlighter-rouge">$HOME/local/bin</code> (或是你选择的路径) 应该在你的 <code class="highlighter-rouge">$PATH</code> 环境变量中。这将会影响 <code class="highlighter-rouge">composer</code> 这个命令是否可用.</p>
+
+<p>当你遇到文档指出执行 Composer 的命令是 <code class="highlighter-rouge">php composer.phar install</code>时，你可以使用下面命令替代:</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="err">composer install</span></code></pre></figure>
+
+<p>本章节会假设你已经安装了全局的 Composer。</p>
+
+<h3 id="如何设置及安装依赖">如何设置及安装依赖</h3>
+
+<p>Composer 会通过一个 <code class="highlighter-rouge">composer.json</code> 文件持续的追踪你的项目依赖。 如果你喜欢，你可以手动管理这个文件，或是使用 Composer 自己管理。<code class="highlighter-rouge">composer require</code> 这个指令会增加一个项目依赖，如果你还没有 <code class="highlighter-rouge">composer.json</code> 文件, 将会创建一个。这里有个例子为你的项目加入 <a href="http://twig.sensiolabs.org">Twig</a> 依赖。</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="err">composer require twig/twig:~1.8</span></code></pre></figure>
+
+<p>另外 <code class="highlighter-rouge">composer init</code> 命令将会引导你创建一个完整的 <code class="highlighter-rouge">composer.json</code> 文件到你的项目之中。无论你使用哪种方式，一旦你创建了 <code class="highlighter-rouge">composer.json</code> 文件，你可以告诉 Composer 去下载及安装你的依赖到 <code class="highlighter-rouge">vendor/</code> 目录中。这命令也适用于你已经下载并已经提供了一个 <code class="highlighter-rouge">composer.json</code> 的项目：</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="err">composer install</span></code></pre></figure>
+
+<p>接下来，添加这一行到你应用的主要 PHP 文件中，这将会告诉 PHP 为你的项目依赖使用 Composer 的自动加载器。</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">require</span> <span class="s1">'vendor/autoload.php'</span><span class="p">;</span></code></pre></figure>
+
+<p>现在你可以使用你项目中的依赖，且它们会在需要时自动完成加载。</p>
+
+<h3 id="更新你的依赖">更新你的依赖</h3>
+
+<p>Composer 会建立一个 <code class="highlighter-rouge">composer.lock</code> 文件，在你第一次执行 <code class="highlighter-rouge">php composer install</code> 时，存放下载的每个依赖包精确的版本编号。假如你要分享你的项目给其他开发者，并且 <code class="highlighter-rouge">composer.lock</code> 文件也在你分享的文件之中的话。 当他们执行 <code class="highlighter-rouge">php composer.phar install</code> 这个命令时，他们将会得到与你一样的依赖版本。 当你要更新你的依赖时请执行 <code class="highlighter-rouge">php composer update</code>。请不要在部署代码的时候使用 <code class="highlighter-rouge">composer update</code>，只能使用 <code class="highlighter-rouge">composer install</code> 命令，否则你会发现你在生产环境中用的是不同的扩展包依赖版本。</p>
+
+<p>当你需要灵活的定义你所需要的依赖版本时，这是最有用。 举例来说需要一个版本为 ~1.8 时，意味着 “任何大于 1.8.0 ，但小于 2.0.x-dev 的版本”。你也可以使用通配符 <code class="highlighter-rouge">*</code> 在 <code class="highlighter-rouge">1.8.*</code> 之中。现在Composer在<code class="highlighter-rouge">composer update</code> 时将升级你的所有依赖到你限制的最新版本。</p>
+
+<h3 id="更新通知">更新通知</h3>
+
+<p>要接收关于新版本的更新通知。你可以注册 <a href="https://www.versioneye.com/">VersionEye</a>，这个 web 服务可以监控你的 Github 及 BitBucket 帐号中的 <code class="highlighter-rouge">composer.json</code> 文件，并且当包有新更新时会发送邮件给你。</p>
+
+<h3 id="检查你的依赖安全问题">检查你的依赖安全问题</h3>
+
+<p><a href="https://security.sensiolabs.org/">Security Advisories Checker</a> 是一个 web 服务和一个命令行工具，二者都会仔细检查你的 <code class="highlighter-rouge">composer.lock</code> 文件，并且告诉你任何你需要更新的依赖。</p>
+
+<h3 id="处理-composer-全局依赖">处理 Composer 全局依赖</h3>
+
+<p>Composer 也可以处理全局依赖和他们的二进制文件。用法很直接，你所要做的就是在命令前加上<code class="highlighter-rouge">global</code>前缀。如果你想安装 PHPUnit 并使它全局可用，你可以运行下面的命令：</p>
+
+<figure class="highlight"><pre><code class="language-console" data-lang="console"><span class="err">composer global require phpunit/phpunit</span></code></pre></figure>
+
+<p>这将会创建一个 <code class="highlighter-rouge">~/.composer</code> 目录存放全局依赖，要让已安装依赖的二进制命令随处可用，你需要添加 <code class="highlighter-rouge">~/.composer/vendor/bin</code> 目录到你的 <code class="highlighter-rouge">$PATH</code> 变量。</p>
+
+<ul>
+  <li><a href="http://getcomposer.org/doc/00-intro.md">其他学习 Composer 相关资源</a></li>
+</ul>
+
+
+</section>

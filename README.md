@@ -1021,37 +1021,37 @@ the second argument, and so on.</li>
 
 <p>下面的代码中有一个 <code class="highlighter-rouge">Database</code> 的类，它需要一个适配器来与数据库交互。我们在构造函数里实例化了适配器，从而产生了耦合。这会使测试变得很困难，而且 <code class="highlighter-rouge">Database</code> 类和适配器耦合的很紧密。</p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-<span class="k">namespace</span> <span class="nx">Database</span><span class="p">;</span>
+    <?php
+    namespace Database;
 
-<span class="k">class</span> <span class="nc">Database</span>
-<span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$adapter</span><span class="p">;</span>
+    class Database
+    {
+        protected $adapter;
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MySqlAdapter</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+        public function __construct()
+        {
+            $this->adapter = new MySqlAdapter;
+        }
+    }
 
-<span class="k">class</span> <span class="nc">MysqlAdapter</span> <span class="p">{}</span></code></pre></figure>
+    class MysqlAdapter {}
 
 <p>这段代码可以用依赖注入重构，从而解耦</p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-<span class="k">namespace</span> <span class="nx">Database</span><span class="p">;</span>
+    <?php
+    namespace Database;
 
-<span class="k">class</span> <span class="nc">Database</span>
-<span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$adapter</span><span class="p">;</span>
+    class Database
+    {
+        protected $adapter;
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nx">MySqlAdapter</span> <span class="nv">$adapter</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">adapter</span> <span class="o">=</span> <span class="nv">$adapter</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+        public function __construct(MySqlAdapter $adapter)
+        {
+            $this->adapter = $adapter;
+        }
+    }
 
-<span class="k">class</span> <span class="nc">MysqlAdapter</span> <span class="p">{}</span></code></pre></figure>
+    class MysqlAdapter {}
 
 <p>现在我们通过外界给予 <code class="highlighter-rouge">Database</code> 类的依赖，而不是让它自己产生依赖的对象。我们甚至能用可以接受依赖对象参数的成员函数来设置，或者如果 <code class="highlighter-rouge">$adapter</code> 属性本身是 <code class="highlighter-rouge">public</code>的，我们可以直接给它赋值。</p>
 
@@ -1075,22 +1075,22 @@ the second argument, and so on.</li>
 
 <p>依赖反转准则是面向对象设计准则 S.O.L.I.D 中的 “D” ,倡导 <em>“依赖于抽象而不是具体”</em>。简单来说就是依赖应该是接口/约定或者抽象类，而不是具体的实现。我们能很容易重构前面的例子，使之遵循这个准则</p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-<span class="k">namespace</span> <span class="nx">Database</span><span class="p">;</span>
+    <?php
+    namespace Database;
 
-<span class="k">class</span> <span class="nc">Database</span>
-<span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$adapter</span><span class="p">;</span>
+    class Database
+    {
+        protected $adapter;
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nx">AdapterInterface</span> <span class="nv">$adapter</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">adapter</span> <span class="o">=</span> <span class="nv">$adapter</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+        public function __construct(AdapterInterface $adapter)
+        {
+            $this->adapter = $adapter;
+        }
+    }
 
-<span class="k">interface</span> <span class="nx">AdapterInterface</span> <span class="p">{}</span>
+    interface AdapterInterface {}
 
-<span class="k">class</span> <span class="nc">MysqlAdapter</span> <span class="k">implements</span> <span class="nx">AdapterInterface</span> <span class="p">{}</span></code></pre></figure>
+    class MysqlAdapter implements AdapterInterface {}
 
 <p>现在 <code class="highlighter-rouge">Database</code> 类依赖于接口，相比依赖于具体实现有更多的优势。</p>
 
@@ -1170,18 +1170,18 @@ the second argument, and so on.</li>
 
 <p><a href="http://php.net/pdo">PDO</a> 是一个数据库连接抽象类库 — 自 5.1.0 版本起内置于 PHP 当中 — 它提供了一个通用的接口来与不同的数据库进行交互。比如你可以使用相同的简单代码来连接 MySQL 或是 SQLite：</p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-<span class="c1">// PDO + MySQL
-</span><span class="nv">$pdo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PDO</span><span class="p">(</span><span class="s1">'mysql:host=example.com;dbname=database'</span><span class="p">,</span> <span class="s1">'user'</span><span class="p">,</span> <span class="s1">'password'</span><span class="p">);</span>
-<span class="nv">$statement</span> <span class="o">=</span> <span class="nv">$pdo</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">"SELECT some_field FROM some_table"</span><span class="p">);</span>
-<span class="nv">$row</span> <span class="o">=</span> <span class="nv">$statement</span><span class="o">-&gt;</span><span class="na">fetch</span><span class="p">(</span><span class="nx">PDO</span><span class="o">::</span><span class="na">FETCH_ASSOC</span><span class="p">);</span>
-<span class="k">echo</span> <span class="nb">htmlentities</span><span class="p">(</span><span class="nv">$row</span><span class="p">[</span><span class="s1">'some_field'</span><span class="p">]);</span>
+    <?php
+    // PDO + MySQL
+    $pdo = new PDO('mysql:host=example.com;dbname=database', 'user', 'password');
+    $statement = $pdo->query("SELECT some_field FROM some_table");
+    $row = $statement->fetch(PDO::FETCH_ASSOC);
+    echo htmlentities($row['some_field']);
 
-<span class="c1">// PDO + SQLite
-</span><span class="nv">$pdo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PDO</span><span class="p">(</span><span class="s1">'sqlite:/path/db/foo.sqlite'</span><span class="p">);</span>
-<span class="nv">$statement</span> <span class="o">=</span> <span class="nv">$pdo</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">"SELECT some_field FROM some_table"</span><span class="p">);</span>
-<span class="nv">$row</span> <span class="o">=</span> <span class="nv">$statement</span><span class="o">-&gt;</span><span class="na">fetch</span><span class="p">(</span><span class="nx">PDO</span><span class="o">::</span><span class="na">FETCH_ASSOC</span><span class="p">);</span>
-<span class="k">echo</span> <span class="nb">htmlentities</span><span class="p">(</span><span class="nv">$row</span><span class="p">[</span><span class="s1">'some_field'</span><span class="p">]);</span></code></pre></figure>
+    // PDO + SQLite
+    $pdo = new PDO('sqlite:/path/db/foo.sqlite');
+    $statement = $pdo->query("SELECT some_field FROM some_table");
+    $row = $statement->fetch(PDO::FETCH_ASSOC);
+    echo htmlentities($row['some_field']);
 
 <p>PDO 并不会对 SQL 请求进行转换或者模拟实现并不存在的功能特性；它只是单纯地使用相同的 API 连接不同种类的数据库。</p>
 
@@ -1189,19 +1189,19 @@ the second argument, and so on.</li>
 
 <p>我们来假设一个 PHP 脚本接收一个数字 ID 作为一个请求参数。这个 ID 应该被用来从数据库中取出一条用户记录。下面是一个<code class="highlighter-rouge">错误</code>的做法：</p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-<span class="nv">$pdo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PDO</span><span class="p">(</span><span class="s1">'sqlite:/path/db/users.db'</span><span class="p">);</span>
-<span class="nv">$pdo</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s2">"SELECT name FROM users WHERE id = "</span> <span class="o">.</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]);</span> <span class="o">//</span> <span class="o">&lt;--</span> <span class="nx">NO</span><span class="o">!</span></code></pre></figure>
+    <?php
+    $pdo = new PDO('sqlite:/path/db/users.db');
+    $pdo->query("SELECT name FROM users WHERE id = " . $_GET['id']); // <-- NO!
 
 <p>这是一段糟糕的代码。你正在插入一个原始的请求参数到 SQL 请求中。这将让被黑客轻松地利用[SQL 注入]方式进行攻击。想一下如果黑客将一个构造的 <code class="highlighter-rouge">id</code> 参数通过像 <code class="highlighter-rouge">http://domain.com/?id=1%3BDELETE+FROM+users</code> 这样的 URL 传入。这将会使 <code class="highlighter-rouge">$_GET['id']</code> 变量的值被设为 <code class="highlighter-rouge">1;DELETE
 FROM users</code> 然后被执行从而删除所有的 user 记录！因此，你应该使用 PDO 限制参数来过滤 ID 输入。</p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-<span class="nv">$pdo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PDO</span><span class="p">(</span><span class="s1">'sqlite:/path/db/users.db'</span><span class="p">);</span>
-<span class="nv">$stmt</span> <span class="o">=</span> <span class="nv">$pdo</span><span class="o">-&gt;</span><span class="na">prepare</span><span class="p">(</span><span class="s1">'SELECT name FROM users WHERE id = :id'</span><span class="p">);</span>
-<span class="nv">$id</span> <span class="o">=</span> <span class="nb">filter_input</span><span class="p">(</span><span class="nx">INPUT_GET</span><span class="p">,</span> <span class="s1">'id'</span><span class="p">,</span> <span class="nx">FILTER_SANITIZE_NUMBER_INT</span><span class="p">);</span> <span class="c1">// &lt;-- filter your data first (see [Data Filtering](#data_filtering)), especially important for INSERT, UPDATE, etc.
-</span><span class="nv">$stmt</span><span class="o">-&gt;</span><span class="na">bindParam</span><span class="p">(</span><span class="s1">':id'</span><span class="p">,</span> <span class="nv">$id</span><span class="p">,</span> <span class="nx">PDO</span><span class="o">::</span><span class="na">PARAM_INT</span><span class="p">);</span> <span class="c1">// &lt;-- Automatically sanitized for SQL by PDO
-</span><span class="nv">$stmt</span><span class="o">-&gt;</span><span class="na">execute</span><span class="p">();</span></code></pre></figure>
+    <?php
+    $pdo = new PDO('sqlite:/path/db/users.db');
+    $stmt = $pdo->prepare('SELECT name FROM users WHERE id = :id');
+    $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT); // <-- filter your data first (see [Data Filtering](#data_filtering)), especially important for INSERT, UPDATE, etc.
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT); // <-- Automatically sanitized for SQL by PDO
+    $stmt->execute();
 
 <p>这是正确的代码。它在一条 PDO 语句中使用了一个限制参数。这将对外部 ID 输入在发送给数据库之前进行转义来防止潜在的 SQL 注入攻击。</p>
 
@@ -1226,28 +1226,26 @@ FROM users</code> 然后被执行从而删除所有的 user 记录！因此，�
 
 <p>当开发者第一次接触 PHP 时，通常会使用类似下面的代码来将数据库的交互与表示层逻辑混在一起：</p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="nt">&lt;ul&gt;</span>
-<span class="cp">&lt;?php</span>
-<span class="k">foreach</span> <span class="p">(</span><span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">'SELECT * FROM table'</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="s2">"&lt;li&gt;"</span><span class="o">.</span><span class="nv">$row</span><span class="p">[</span><span class="s1">'field1'</span><span class="p">]</span><span class="o">.</span><span class="s2">" - "</span><span class="o">.</span><span class="nv">$row</span><span class="p">[</span><span class="s1">'field1'</span><span class="p">]</span><span class="o">.</span><span class="s2">"&lt;/li&gt;"</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="cp">?&gt;</span>
-<span class="nt">&lt;/ul&gt;</span></code></pre></figure>
-
+    <?php
+    foreach ($db->query('SELECT * FROM table') as $row) {
+        echo "<li>".$row['field1']." - ".$row['field1']."</li>";
+    }
+    ?>
+ 
 <p>这从很多方面来看都是错误的做法，主要是由于它不易阅读又难以测试和调试。而且如果你不加以限制的话，它会输出非常多的字段。</p>
 
 <p>其实还有许多不同的解决方案来完成这项工作 — 取决于你倾向于 <a href="/#object-oriented-programming">面向对象编程（OOP）</a>还是<a href="/#functional-programming">函数式编程</a> — 但必须有一些分离的元素。</p>
 
 <p>来看一下最基本的做法：</p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-<span class="k">function</span> <span class="nf">getAllFoos</span><span class="p">(</span><span class="nv">$db</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nv">$db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">'SELECT * FROM table'</span><span class="p">);</span>
-<span class="p">}</span>
+    <?php
+    function getAllFoos($db) {
+        return $db->query('SELECT * FROM table');
+    }
 
-<span class="k">foreach</span> <span class="p">(</span><span class="nx">getAllFoos</span><span class="p">(</span><span class="nv">$db</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">echo</span> <span class="s2">"&lt;li&gt;"</span><span class="o">.</span><span class="nv">$row</span><span class="p">[</span><span class="s1">'field1'</span><span class="p">]</span><span class="o">.</span><span class="s2">" - "</span><span class="o">.</span><span class="nv">$row</span><span class="p">[</span><span class="s1">'field1'</span><span class="p">]</span><span class="o">.</span><span class="s2">"&lt;/li&gt;"</span><span class="p">;</span> <span class="c1">// BAD!!
-</span><span class="p">}</span></code></pre></figure>
+    foreach (getAllFoos($db) as $row) {
+        echo "<li>".$row['field1']." - ".$row['field1']."</li>"; // BAD!!
+    }
 
 <p>这是一个不错的开头。将这两个元素放入了两个不同的文件于是你得到了一些干净的分离。</p>
 
@@ -1255,42 +1253,42 @@ FROM users</code> 然后被执行从而删除所有的 user 记录！因此，�
 
 <p><strong>foo.php</strong></p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-<span class="nv">$db</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PDO</span><span class="p">(</span><span class="s1">'mysql:host=localhost;dbname=testdb;charset=utf8'</span><span class="p">,</span> <span class="s1">'username'</span><span class="p">,</span> <span class="s1">'password'</span><span class="p">);</span>
+    <?php
+    $db = new PDO('mysql:host=localhost;dbname=testdb;charset=utf8', 'username', 'password');
 
-<span class="c1">// Make your model available
-</span><span class="k">include</span> <span class="s1">'models/FooModel.php'</span><span class="p">;</span>
+    // Make your model available
+    include 'models/FooModel.php';
 
-<span class="c1">// Create an instance
-</span><span class="nv">$fooModel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FooModel</span><span class="p">(</span><span class="nv">$db</span><span class="p">);</span>
-<span class="c1">// Get the list of Foos
-</span><span class="nv">$fooList</span> <span class="o">=</span> <span class="nv">$fooModel</span><span class="o">-&gt;</span><span class="na">getAllFoos</span><span class="p">();</span>
+    // Create an instance
+    $fooModel = new FooModel($db);
+    // Get the list of Foos
+    $fooList = $fooModel->getAllFoos();
 
-<span class="c1">// Show the view
-</span><span class="k">include</span> <span class="s1">'views/foo-list.php'</span><span class="p">;</span></code></pre></figure>
+    // Show the view
+    include 'views/foo-list.php';
 
 <p><strong>models/FooModel.php</strong></p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
-<span class="k">class</span> <span class="nc">FooModel</span>
-<span class="p">{</span>
-    <span class="k">protected</span> <span class="nv">$db</span><span class="p">;</span>
+    <?php
+    class FooModel
+    {
+        protected $db;
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nx">PDO</span> <span class="nv">$db</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span> <span class="o">=</span> <span class="nv">$db</span><span class="p">;</span>
-    <span class="p">}</span>
+        public function __construct(PDO $db)
+        {
+            $this->db = $db;
+        }
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">getAllFoos</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">db</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="s1">'SELECT * FROM table'</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></figure>
+        public function getAllFoos() {
+            return $this->db->query('SELECT * FROM table');
+        }
+    }
 
 <p><strong>views/foo-list.php</strong></p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$fooList</span> <span class="k">as</span> <span class="nv">$row</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
-    <span class="cp">&lt;?=</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">'field1'</span><span class="p">]</span> <span class="cp">?&gt;</span> - <span class="cp">&lt;?=</span> <span class="nv">$row</span><span class="p">[</span><span class="s1">'field1'</span><span class="p">]</span> <span class="cp">?&gt;</span>
-<span class="cp">&lt;?php</span> <span class="k">endforeach</span> <span class="cp">?&gt;</span></code></pre></figure>
+    <?php foreach ($fooList as $row): ?>
+        <?= $row['field1'] ?> - <?= $row['field1'] ?>
+    <?php endforeach ?>
 
 <p>向大多数现代框架的做法学习是很有必要的，尽管多了一些手动的工作。你可以并不需要每一次都完全这么做，但将太多的表示逻辑层代码和数据库交互掺杂在一些将会为你在想要对程序进行<a href="/#unit-testing">单元测试</a>时带来真正的麻烦。</p>
 
@@ -1354,40 +1352,40 @@ FROM users</code> 然后被执行从而删除所有的 user 记录！因此，�
 
 <p>使用 <a href="http://platesphp.com/">Plates</a> 类库。</p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span> <span class="c1">// user_profile.php ?&gt;
-</span>
-<span class="o">&lt;?</span><span class="nx">php</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">'header'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="s1">'User Profile'</span><span class="p">])</span> <span class="cp">?&gt;</span>
+    <?php // user_profile.php ?>
 
-<span class="nt">&lt;h1&gt;</span>User Profile<span class="nt">&lt;/h1&gt;</span>
-<span class="nt">&lt;p&gt;</span>Hello, <span class="cp">&lt;?=</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span><span class="cp">?&gt;</span><span class="nt">&lt;/p&gt;</span>
+    <?php $this->insert('header', ['title' => 'User Profile']) ?>
 
-<span class="cp">&lt;?php</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">insert</span><span class="p">(</span><span class="s1">'footer'</span><span class="p">)</span> <span class="cp">?&gt;</span></code></pre></figure>
+    <h1>User Profile</h1>
+    <p>Hello, <?=$this->escape($name)?></p>
+
+    <?php $this->insert('footer') ?>
 
 <h3 id="原生-php-模板使用继承的示例">原生 PHP 模板使用继承的示例</h3>
 
 <p>使用 <a href="http://platesphp.com/">Plates</a> 类库。</p>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span> <span class="c1">// template.php ?&gt;
-</span>
-<span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
-    <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;&lt;?=</span><span class="nv">$title</span><span class="cp">?&gt;</span><span class="nt">&lt;/title&gt;</span>
-<span class="nt">&lt;/head&gt;</span>
-<span class="nt">&lt;body&gt;</span>
+    <?php // template.php ?>
 
-<span class="nt">&lt;main&gt;</span>
-    <span class="cp">&lt;?=</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">section</span><span class="p">(</span><span class="s1">'content'</span><span class="p">)</span><span class="cp">?&gt;</span>
-<span class="nt">&lt;/main&gt;</span>
+    <html>
+    <head>
+        <title><?=$title?></title>
+    </head>
+    <body>
 
-<span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span></code></pre></figure>
+    <main>
+        <?=$this->section('content')?>
+    </main>
 
-<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span> <span class="c1">// user_profile.php ?&gt;
-</span>
-<span class="o">&lt;?</span><span class="nx">php</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">layout</span><span class="p">(</span><span class="s1">'template'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="s1">'User Profile'</span><span class="p">])</span> <span class="cp">?&gt;</span>
+    </body>
+    </html>
 
-<span class="nt">&lt;h1&gt;</span>User Profile<span class="nt">&lt;/h1&gt;</span>
-<span class="nt">&lt;p&gt;</span>Hello, <span class="cp">&lt;?=</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span><span class="cp">?&gt;</span><span class="nt">&lt;/p&gt;</span></code></pre></figure>
+    <?php // user_profile.php ?>
+
+    <?php $this->layout('template', ['title' => 'User Profile']) ?>
+
+    <h1>User Profile</h1>
+    <p>Hello, <?=$this->escape($name)?></p>
 
 
 </section>

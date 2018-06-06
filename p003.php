@@ -40,3 +40,10 @@ $student = unserialize($stu); //反序列化对象
 $student -> say();//Tom is male
 $teacher = unserialize($tea);
 $teacher -> say();//Jame is man
+
+/**
+ * 类是定义一系列属性和操作的模板。而对象把属性进行具体化，然后交给类处理。
+ * 对象就是数据，对象本身不包含方法。但对象有一个“指针”指向一个类。类里有方法。
+ * 方法描述不同的属性所导致的不同表现。
+ * 类和对象是不可分割的，有对象就必定有一个类和其对应
+ */

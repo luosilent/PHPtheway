@@ -47,3 +47,85 @@ $teacher -> say();//Jame is man
  * 方法描述不同的属性所导致的不同表现。
  * 类和对象是不可分割的，有对象就必定有一个类和其对应
  */
+
+/**
+ * Class Account
+ * 使用__set()和__get()魔法方法访问私有属性
+ */
+/**
+ * 使用call和callStatic防止调用不存在的方法
+ */
+
+/**
+ * toString方法输出定制结果
+ */
+class Account {
+    private $user = 1;
+    private $pwd = 2;
+    private $jame;
+    private $big;
+    public function __set($name, $value)
+    {
+        // TODO: Implement __set() method.
+        echo "setting $name to $value<br>";
+        $this -> $name = $value;
+    }
+    public function __get($name)
+    {
+        // TODO: Implement __get() method.
+        if (!isset($this ->$name)){
+            echo "$name 未设置<br>";
+            $this -> $name = "0";
+        }
+        return " $name 值为".$this -> $name;
+    }
+    public function __call($name, $arguments)
+    {
+        // TODO: Implement __call() method.
+        switch (count($arguments)){
+            case 2:
+                echo $arguments[0] * $arguments[1],PHP_EOL;
+                break;
+            case 3:
+                echo array_sum($arguments),PHP_EOL;
+                break;
+            default:
+                echo "参数不对",PHP_EOL;
+                break;
+        }
+    }
+
+    public function __toString(){
+        return "当前对象的用户名是{$this -> user},密码是{$this -> pwd}";
+    }
+}
+$a = new Account();
+
+echo "<br>";
+echo $a -> user;
+echo "<br>";
+echo $a -> pwd;
+echo "<br>";
+$a -> jame = 3;
+echo $a -> jame;
+echo "<br>";
+echo $a -> big;
+echo "<br>";
+echo $a;
+echo "<br>";
+echo  PHP_EOL;
+print_r($a);
+echo "<br>";
+$a -> make(5);
+$a -> make(5,6);
+$a -> make(5,6,7);
+$a -> make(5,6,7,8);
+
+
+
+/**
+ * 求字符串长度
+ * $str = "sada";
+ * echo strlen(trim($str));
+ */
+

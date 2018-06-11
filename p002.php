@@ -74,7 +74,8 @@ class Cart
 {
     const PRICE_BUTTER  = 1.00;
     const PRICE_MILK    = 3.00;
-    const PRICE_EGGS    = 6.00;
+    const PRICE_EGGS    = 5.00;
+    const PRICE_APPLES  = 7.00;
 
     protected   $products = array();
 
@@ -114,9 +115,12 @@ $my_cart = new Cart;
 $my_cart->add('butter', 1);
 $my_cart->add('milk', 3);
 $my_cart->add('eggs', 6);
+$my_cart->add('apples', 10);
 
 // 打出出总价格，其中有 5% 的销售税.
 echo "p002.4 输出总价格";
 echo "</br>";
 print "总价格是".$my_cart->getTotal(0.05) . "$"."\n";
-// 最后结果是 48.3
+// 最后结果是 100.8
+echo "<hr>";
+

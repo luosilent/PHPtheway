@@ -59,6 +59,7 @@ $teacher -> say();//Jame is man
 /**
  * toString方法输出定制结果
  */
+
 class Account {
     private $user = 1;
     private $pwd = 2;

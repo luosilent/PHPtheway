@@ -473,3 +473,7 @@ $barY = new BarY();
 print $barY->fooStatic() . "\n";
 echo "<hr>";
 
+/**
+ *
+ */
+

@@ -9,13 +9,13 @@ include_once 'BookQueue.php';
 
 $myBooks = new BookQueue(20);
 
-$myBooks->enqueue('111');
-$myBooks->enqueue('222');
-$myBooks->enqueue('333');
-$myBooks->enqueue('444');
-$myBooks->enqueue('555');
-$myBooks->enqueue('666');
-$myBooks->enqueue('777');
+$myBooks->enqueue('1111');
+$myBooks->enqueue('2222');
+$myBooks->enqueue('3333');
+$myBooks->enqueue('4444');
+$myBooks->enqueue('5555');
+$myBooks->enqueue('6666');
+$myBooks->enqueue('7777');
 
 echo $myBooks->dequeue();
 echo "\n";

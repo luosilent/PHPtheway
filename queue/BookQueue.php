@@ -6,7 +6,6 @@
  * Time: 16:34
  */
 
-
 class BookQueue implements Countable
 {
     /**

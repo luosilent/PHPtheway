@@ -1,25 +1,34 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Administrator
+ * Date: 2018/6/12
+ * Time: 15:16
+ */
+include_once 'NumStack.php';
 
+$numbers = new NumStack(5);
 
-include_once 'BookStack.php';
+$numbers->push('111');
+$numbers->push('222');
+$numbers->push('333');
+$numbers->push('444');
+$numbers->push('555');
+$numbers->push('666');
+$numbers->push('777');
+$numbers->push('888');
+$numbers->push('999');
 
-$myBooks = new BookStack(20);
-
-$myBooks->push('111');
-$myBooks->push('222');
-$myBooks->push('333');
-$myBooks->push('444');
-$myBooks->push('555');
-$myBooks->push('666');
-$myBooks->push('777');
-
-echo $myBooks->pop();
-echo "\n";
-echo $myBooks->top();
-echo "\n";
-var_dump($myBooks->isEmpty());
-var_dump($myBooks->count());
-while (!$myBooks->isEmpty()){
-    echo $myBooks->pop() , "\n";
+echo "<br>";
+echo $numbers->pop(); //999
+echo "<br>";
+echo $numbers->top(); //888
+echo "<br>";
+var_dump($numbers->isEmpty()); // bool(false)
+echo "<br>";
+var_dump($numbers->count()); //int(8)
+echo "<br>";
+while (!$numbers->isEmpty()){
+    echo $numbers->pop() . "<br>";
 }
 

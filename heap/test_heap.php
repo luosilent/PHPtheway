@@ -2,12 +2,12 @@
 /**
  * Created by PhpStorm.
  * User: Administrator
- * Date: 2018/6/11
- * Time: 16:27
+ * Date: 2018/6/13
+ * Time: 10:27
  */
-include_once 'BinaryHeap.php';
+include_once 'NumHeap.php';
 
-$heap = new BinaryHeap();
+$heap = new NumHeap();
 $heap->insert(1);
 $heap->insert(6);
 $heap->insert(44);
@@ -26,8 +26,10 @@ $heap->insert(53);
 $heap->insert(4);
 $heap->insert(19);
 
-//$heap->dump();
-
+$heap->dump();
+var_dump($heap->count());
+//echo $heap->extract(),"\n";
 while (!$heap->isEmpty()){
     echo $heap->extract(),"\n";
 }
+var_dump($heap->count());

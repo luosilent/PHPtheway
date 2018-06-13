@@ -2,19 +2,29 @@
 /**
  * Created by PhpStorm.
  * User: Administrator
- * Date: 2018/6/11
- * Time: 16:26
+ * Date: 2018/6/13
+ * Time: 9:33
  */
+header("Content-type: text/html; charset=utf-8");
 
-class BinaryHeap
-{
+/**
+ * Class NumHeap
+ */
+class NumHeap {
+    /**
+     * ç”¨æ•°ç»„è¡¨ç¤ºå †
+     * @var array
+     */
     protected $heap;
 
+    /**
+     * åˆå§‹åŒ–å †
+     * NumHeap constructor.
+     */
     public function __construct()
     {
         $this->heap = array();
     }
-
     public function isEmpty()
     {
         return empty($this->heap);
@@ -22,28 +32,30 @@ class BinaryHeap
 
     public function count()
     {
-        // returns the heap size
-        return count($this->heap) - 1;
+        return count($this->heap);
     }
 
     public function extract()
     {
-        if ($this->isEmpty()) {
-            throw new RunTimeException('Heap is empty');
+        try {
+            if ($this->isEmpty()) {
+                throw new RunTimeException();
+            }
+        }catch (RuntimeException $e) {
+            echo "æ ˆç©º".PHP_EOL;
         }
 
-        // ÌáÈ¡¸ù½ÚµãµÄÏî
+        // æå–æ ¹èŠ‚ç‚¹çš„é¡¹
         $root = array_shift($this->heap);
 
         if (!$this->isEmpty()) {
-            // °ÑÎ²²¿Ïî²åÈëµ½¶ÑµÄ¸ù½Úµã
+            // æŠŠå°¾éƒ¨é¡¹æ’å…¥åˆ°å †çš„æ ¹èŠ‚ç‚¹
             $last = array_pop($this->heap);
             array_unshift($this->heap, $last);
 
-            //ÖØÐÂµ÷Õû°ë¶Ñ½á¹¹£¨semi heap£© Ê¹Æä±ä³É¶Ñ½á¹¹
+            //é‡æ–°è°ƒæ•´åŠå †ç»“æž„ï¼ˆsemi heapï¼‰ ä½¿å…¶å˜æˆå †ç»“æž„
             $this->adjust(0);
         }
-
         return $root;
     }
 
@@ -57,34 +69,33 @@ class BinaryHeap
 
     protected function isLeaf($node)
     {
-        // there will always be 2n + 1 nodes in the sub-heap
         return ((2 * $node) + 1) > $this->count();
     }
 
     protected function adjust($root)
     {
-        // °Ñ¸ù½ÚµãµÄÏîÒ»ÖÂÏòÏÂÒÆ¶¯£¬Ö±µ½³ÉÎªÒ¶×Ó½Úµã
+        // æŠŠæ ¹èŠ‚ç‚¹çš„é¡¹ä¸€è‡´å‘ä¸‹ç§»åŠ¨ï¼Œç›´åˆ°æˆä¸ºå¶å­èŠ‚ç‚¹
         if (!$this->isLeaf($root)) {
             $left = (2 * $root) + 1; // left child
             $right = (2 * $root) + 2; // right child
 
-            // Èç¹û¸ù½ÚµãÏîµÄÖµÐ¡ÓÚ×Ó½ÚµãÏîµÄÖµ
+            // å¦‚æžœæ ¹èŠ‚ç‚¹é¡¹çš„å€¼å°äºŽå­èŠ‚ç‚¹é¡¹çš„å€¼
             $h = $this->heap;
             if ((isset($h[$left]) && $this->compare($h[$root], $h[$left]) < 0)
                 || (isset($h[$right]) && $this->compare($h[$root], $h[$right]) < 0)
             ) {
-                // ÕÒ×î´óµÄ×Ó½Úµã
+                // æ‰¾æœ€å¤§çš„å­èŠ‚ç‚¹
                 if (isset($h[$left]) && isset($h[$right])) {
                     $j = ($this->compare($h[$left], $h[$right]) >= 0) ? $left : $right;
                 } else if (isset($h[$left])) {
-                    $j = $left; // Ö»´æÔÚ×ó×Ó½Úµã
+                    $j = $left; // åªå­˜åœ¨å·¦å­èŠ‚ç‚¹
                 } else {
-                    $j = $right; // Ö»´æÔÚÓÒ×Ó½Úµã
+                    $j = $right; // åªå­˜åœ¨å³å­èŠ‚ç‚¹
                 }
-                // ¸ú½ÚµãÖµºÍ×Ó½ÚµãÖµ½»»»
+                // è·ŸèŠ‚ç‚¹å€¼å’Œå­èŠ‚ç‚¹å€¼äº¤æ¢
                 list($this->heap[$root], $this->heap[$j]) = array($this->heap[$j], $this->heap[$root]);
 
-                // µÝ¹é´¦Àí $j ½ÚµãÏî£¬Ö±µ½·ûºÏ¶Ñ½á¹¹
+                // é€’å½’å¤„ç† $j èŠ‚ç‚¹é¡¹ï¼Œç›´åˆ°ç¬¦åˆå †ç»“æž„
                 // node j
                 $this->adjust($j);
             }
@@ -93,16 +104,16 @@ class BinaryHeap
 
     public function insert($item)
     {
-        // ÐÂµÄÖµ²åÈëµ½¶ÑµÄµ×²¿
+        // æ–°çš„å€¼æ’å…¥åˆ°å †çš„åº•éƒ¨
         $this->heap[] = $item;
 
-        // ÏòÉÏÒÆ¶¯ÐÂ²åÈëµÄÖµ£¬Ö±µ½ËùÓÐµÄ¸¸½ÚµãÖµ´óÓÚ×Ó½ÚµãµÄÖµ
-        $place = $this->count();
+        // å‘ä¸Šç§»åŠ¨æ–°æ’å…¥çš„å€¼ï¼Œç›´åˆ°æ‰€æœ‰çš„çˆ¶èŠ‚ç‚¹å€¼å¤§äºŽå­èŠ‚ç‚¹çš„å€¼
+        $place = $this->count() -1;
         $parent = floor($place / 2);
 
-        // Èç¹û»¹Ã»µ½¸ù½Úµã²¢ÇÒ×Ó½ÚµãµÄÖµ´óÓÚ¸¸½ÚµãµÄÖµ
+        // å¦‚æžœè¿˜æ²¡åˆ°æ ¹èŠ‚ç‚¹å¹¶ä¸”å­èŠ‚ç‚¹çš„å€¼å¤§äºŽçˆ¶èŠ‚ç‚¹çš„å€¼
         while ($place > 0 && $this->compare($this->heap[$place], $this->heap[$parent]) >= 0) {
-            // ×Ó½ÚµãµÄÖµºÍ¸¸½ÚµãµÄÖµ½»»»Î»ÖÃ
+            // å­èŠ‚ç‚¹çš„å€¼å’Œçˆ¶èŠ‚ç‚¹çš„å€¼äº¤æ¢ä½ç½®
             list($this->heap[$place], $this->heap[$parent]) = array($this->heap[$parent], $this->heap[$place]);
             $place = $parent;
             $parent = floor($place / 2);
@@ -113,4 +124,5 @@ class BinaryHeap
     {
         print_r($this->heap);
     }
+
 }

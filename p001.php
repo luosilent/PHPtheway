@@ -384,9 +384,9 @@ class MyClassT {
     const CONST_VALUE = 'A constant value';
 }
 
-$classname = 'MyClassT';
+$className = 'MyClassT';
 echo 'p001.10  在类的外部使用 :: 操作符';echo "<br>";
-echo $classname::CONST_VALUE; // 自 PHP 5.3.0 起
+echo $className::CONST_VALUE; // 自 PHP 5.3.0 起
 echo "<br>";
 echo MyClassT::CONST_VALUE;
 echo "<hr>";
@@ -401,9 +401,9 @@ class OtherClass extends MyClassT
     }
 }
 
-$classname = 'OtherClass';
+$className = 'OtherClass';
 echo 'p001.11   在类定义内部使用 ::';echo "<br>";
-echo $classname::doubleColon(); // 自 PHP 5.3.0 起
+echo $className::doubleColon(); // 自 PHP 5.3.0 起
 echo "<br>";
 OtherClass::doubleColon();
 echo "<hr>";

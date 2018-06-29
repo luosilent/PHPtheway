@@ -11,7 +11,9 @@ header('Content-type:text/html;charset=utf-8');
 $url = $_GET['url'];
 $pattern = $_GET['pattern'];
 
-
+/**
+ * Class LuoSpider
+ */
 class LuoSpider
 {
 
@@ -23,7 +25,11 @@ class LuoSpider
         return $content;
     }
 
-
+    /**
+     * @param $content
+     * @param $pattern
+     * @return array
+     */
     public function extract($content, $pattern)
     {
         $matches = array();
@@ -33,6 +39,9 @@ class LuoSpider
         return $matches;
     }
 
+    /**
+     * @return PDO
+     */
     public function conn()
     {
 
@@ -60,7 +69,10 @@ class LuoSpider
 
     }
 
-
+    /**
+     * @param $pattern
+     * @return int
+     */
     public function countPat($pattern)
     {
         $reCount = substr_count($pattern, '(.*?)');
@@ -68,7 +80,10 @@ class LuoSpider
         return $reCount;
     }
 
-
+    /**
+     * @param $url
+     * @param $pattern
+     */
     public function returnAll($url, $pattern)
     {
 

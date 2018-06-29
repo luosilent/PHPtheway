@@ -1,73 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
-        <title>PHP爬虫</title>
-        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css"> 
-        <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script> 
-        <style>
-            body{background: green;}
-        </style>
+    
+<meta charset="UTF-8">
+    
+<title>PHP爬虫</title>     
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    
+<link rel="stylesheet"
+	href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+      
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+      
 </head>
 <body>
-    <h3 class="text-center">PHP爬虫</h3>
-    <div class="container">       
-            <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-success">
-                            请输入抓取的链接url：格式：https://www.douyu.com/directory/game/LOL</a>
-                <input type="text" name="inputUrl" class="form-control"
-                            id="inputUrl" value="https://www.douyu.com/directory/game/LOL" />
-                <a href="#" class="list-group-item list-group-item-success">请输入你要匹配内容的正则:例如：
-                            '/<span class="dy-name ellipsis fl">(.*?)<\/span>/'</a>
-                <input type="text" name="inputPage" class="form-control" id="inputPat" value="">
-                <button class="btn btn-success btn-block" id="star">开始爬取</button>
-            </div>
-            
-            <div class="list-group">
-                        <div style="text-align: center">
-                <label >抓取的结果是：</label>
-               </div>  
-                <pre id="txt1"></pre>
-                 
-            </div>
-        </div>
-    <script>
-    window.onload=function(){
+	    
+	<h3 class="text-center">PHP爬虫</h3>
+	    
+	<div class="container">
+		                
+		<div class="list-group">
+			            
+			<div class="list-group-item list-group-item-info">
+				请输入抓取的链接url：</div>
+			            <input type="text" name="inputUrl" class="form-control"
+				id="inputUrl" value="https://www.douyu.com/directory/game/LOL" />
+			            
+			<div class="list-group-item list-group-item-info">请输入你要匹配内容的正则表达式:(以/开头和结尾)</div>
+			            <input type="text" name="inputPage" class="form-control"
+				id="inputPat" value="">             
+			<button class="btn btn-info btn-block" id="star">开始爬取</button>
+			        
+		</div>
+		                 
+		<div class="list-group ">
+			<div style="text-align: center">
+          <label >抓取的结果是：</label>            
+			</div>
+			               
+			<pre class="list-group-item-success" id="txt1">还未爬取...等待结果</pre>
+			                      
+		</div>
+		    
+	</div>
+	    
+	<script>
+		window.onload = function() {
 
-        var inputPat =document.getElementById('inputPat');
-        inputPat.value = '/<span class="dy-name ellipsis fl">(.*?)<\\/span>/'
+			var inputPat = document.getElementById('inputPat');
+			inputPat.value = '/<span class="dy-name ellipsis fl">(.*?)<\\/span>/'
 
-        var inputUrl = document.getElementById('inputUrl');
-        var oStar = document.getElementById('star');
-        var oTxt = document.getElementById('txt1');
+			var inputUrl = document.getElementById('inputUrl');
+			var oStar = document.getElementById('star');
+			var oTxt = document.getElementById('txt1');
 
-        oStar.onclick=function(){
+			oStar.onclick = function() {
 
-            var xhr = new XMLHttpRequest();
+				var xhr = new XMLHttpRequest();
 
-            xhr.onreadystatechange = function(){
+				xhr.onreadystatechange = function() {
 
-                if(xhr.readyState ==  4){
+					if (xhr.readyState == 4) {
 
-                    var reInfo = xhr.responseText;
+						var reInfo = xhr.responseText;
 
-                    if(reInfo == ''){
+						if (reInfo == '') {
 
-                        oTxt.innerHTML = '结果为空，请检查你的正则是否正确!'
-                    }else{
+							oTxt.innerHTML = '结果为空，请检查你的正则是否正确!'
+						} else {
 
-                        oTxt.innerHTML = reInfo;
-                    }
-                }
-            }
+							oTxt.innerHTML = reInfo;
+						}
+					}
+				}
 
-            xhr.open('get','phpSpider.php?url='+inputUrl.value+'&pattern='+inputPat.value,true);
+				xhr.open('get', 'spider.php?url=' + inputUrl.value
+						+ '&pattern=' + inputPat.value, true);
 
-            xhr.send();
-        }
+				xhr.send();
+			}
 
-    }
-</script>
+		}
+	</script>
 </body>
 </html>

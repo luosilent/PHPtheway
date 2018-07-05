@@ -1,41 +1,35 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: luosilent
  * Date: 2018/6/27
  * Time: 15:47
  */
-class Connection
-{
-    private static $dsn = "mysql:host=127.0.0.1;dbName=spider;port=3306;charset=UTF8";
-
-    private static $username = "root";
-
-    private static $password = "root";
-
-    /**
-     * @var \PDO
-     */
-    private static $instance;
-
-    /**
-     * Connection constructor.
-     */
-    private function __construct()
+class Connect {
+    public function conn()
     {
-    }
+        $host = '127.0.0.1';
+        $dbName = 'spider';
+        $charset = 'utf8';
+        $dsn = "mysql:host=$host;dbName=$dbName;charset=$charset";
+        $uerName = "root";
+        $password = "root";
 
-    /**
-     * @return \PDO
-     */
-    public static function getInstance()
-    {
-
-        if (is_null(self::$instance)) {
-            self::$instance = new \PDO(self::$dsn, self::$username, self::$password);
-            self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        try {
+            $conn = new PDO($dsn, $uerName, $password);
+            $conn->query("set NAMES $charset");
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            //添加使用数据库
+            $str = "use $dbName";
+            $conn->exec($str);
+        } catch (PDOException $e) {
+            $error = "Access denied! ";
+            $ext = $e->getMessage();
+            echo $error . $ext;
         }
 
-        return self::$instance;
+        return $conn;
+
     }
 }

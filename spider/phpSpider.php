@@ -2,135 +2,151 @@
 /**
  * Created by PhpStorm.
  * User: luosilent
- * Date: 2018/6/27
- * Time: 13:36
+ * Date: 2018/6/26
+ * Time: 14:51
  */
+require_once 'Connect.php';
 header('Content-type:text/html;charset=utf-8');
 
 $url = $_GET['url'];
-$pattern = $_GET['pattern'];
+$patUser = $_GET['patUser'];
+$patView = $_GET['patView'];
+$patKey = $_GET['patKey'];
 
-
+/**
+ * Class DySpider
+ */
 class Spider
 {
-
 
     public function getContent($url)
     {
         $content = file_get_contents($url);
+
         return $content;
     }
 
+    /**
+     * @param $content
+     * @param $pattern
+     * @return array
+     */
 
     public function extract($content, $pattern)
     {
         $matches = array();
         preg_match_all($pattern, $content, $matches);
-        // preg_match 函数的结果是数组的形式
+
         return $matches;
     }
 
 
-    public function saveInfo($reArr, $fen)
-    {
-        $myFile = fopen('result.txt', 'w') or die("Unable to open file!");
-        for ($i = 0; $i < count($reArr); $i ++) {
-            fwrite($myFile, $reArr[$i] . $fen);
-        }
-        fclose($myFile);
-    }
-
-
-    public function connect($username, $password, $dbName)
-    {
-        $link = mysqli_connect('localhost', $username, $password);
-        $choose = mysqli_select_db($dbName, $link);
-        if (! $choose) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
-    }
-
-    public function insetInfo($link, $sql)
-    {
-        $query = mysqli_query($link, $sql);
-        if ($query && mysqli_affected_rows($link) > 0) {
-            return "数据添加成功";
-        } else {
-            return "数据添加失败";
-        }
-    }
-
-
+    /**
+     * @param $pattern
+     * @return int
+     */
     public function countPat($pattern)
     {
         $reCount = substr_count($pattern, '(.*?)');
+
         return $reCount;
     }
 
-
-    public function testDemo()
+    /**
+     * @param $url
+     * @param $patUser
+     */
+    public function returnUser($url, $patUser)
     {
-        $url = "http://php.net/manual/zh/funcref.php";
+        $connect = new Connect();
+        $conn = $connect->conn();
         $op = self::getContent($url);
-        $pattern = '/<a href="(.*?)">(.*?)<\/a>/';
-        $reinFo = self::extract($op, $pattern);
-        $countNum = self::countPat($pattern);
+        $reinFo = self::extract($op, $patUser);
+        $countNum = self::countPat($patUser);
         $reinFo = $reinFo[$countNum];
-        return $reinFo;
-    }
-
-
-    public function returnAll($url, $pattern)
-    {
-        $serverName = "localhost";
-        $username = "root";
-        $password = "root";
-        $dbName = "spider";
-        $charset = 'utf8';
-        
-        $op = self::getContent($url);
-        $reinFo = self::extract($op, $pattern);
-        $countNum = self::countPat($pattern);
-        $reinFo = $reinFo[$countNum];
-        // $reinFo = $reinFo[1];
-        $conn = new PDO("mysql:host=$serverName;dbname=$dbName", $username, $password);
-        $conn->query("set NAMES $charset");
         $i = 0;
         foreach ($reinFo as $key => $value) {
-            
-            // $arr[$i] = $value;
-             $i++;
-             $v = $value;
-
-//            $kk = json_encode($v);print_R($kk);
-//
-//            $ll = json_decode($kk,true);print_R($ll);exit;
-
-             //user正则 /<span class="dy-name ellipsis fl">(.*?)<\/span>/
-             $sql = "INSERT INTO dyUser (id,user)
-             VALUES ('".$i."', '".$v."')";
-            //view正则 /<span class="dy-num fr"  >(.*?)<\/span>/
-             $sql = "INSERT INTO dyUser (id, view)
-             VALUES ('".$i."','".$v."')";
-            
-            //key正则 /<span class="impress-tag-item" .*?[^>]*>(.*?)<\/span>/i
-            
-             $sql = "INSERT INTO dyKey(id, kw)
-             VALUES ('".$i."','".$v."')";
-
-            //            $sql = "INSERT INTO dyUser1 (id, user)
-//             VALUES ('".$i."','".$v."')";
-
-//             $sql = "UPDATE dyUser1 set view = '".$v."'
-//             where id= '".$i."'";
-            
-            // echo $sql;
+            $i++;
             echo ($key + 1) . '.' . $value . "<br>";
-             $sth = $conn->prepare($sql);
-             $sth->execute();
+
+//            插入dyLOL表
+//             $sql = "INSERT INTO `dyLOL` (id, user)
+//             VALUES ('".$i."','".$value."')";
+//            插入dyJDQS表
+//            $sql = "INSERT INTO `dyJDQS` (id, user)
+//             VALUES ('".$i."','".$value."')";
+//            插入dyYZ表
+//            $sql = "INSERT INTO `dyYZ` (id, user)
+//             VALUES ('".$i."','".$value."')";
+//            更新User表
+//            $sql = "UPDATE `dyLOL` set `user` = '" . $value . "'
+//              where id= '" . $i . "'";
+//            $stmt = $conn->prepare($sql);
+//            $stmt->execute();
+        }
+    }
+
+    /**
+     * @param $url
+     * @param $patView
+     */
+    public function returnView($url, $patView)
+    {
+        $connect = new Connect();
+        $conn = $connect->conn();
+        $op = self::getContent($url);
+        $reinFo = self::extract($op, $patView);
+        $countNum = self::countPat($patView);
+        $reinFo = $reinFo[$countNum];
+        $i = 0;
+        foreach ($reinFo as $key => $value) {
+            $arr[$i] = $value;
+            $i++;
+            echo ($key + 1) . '.' . $value . "<br>";
+//            更新view
+//            $sql = "UPDATE `dyLOL` set view = '" . $value . "'
+//              where id= '" . $i . "'";
+//
+//            $stmt = $conn->prepare($sql);
+//            $stmt->execute();
+        }
+    }
+
+    /**
+     * @param $url
+     * @param $patKey
+     */
+    public function returnKey($url, $patKey)
+    {
+        $connect = new Connect();
+        $conn = $connect->conn();
+        $op = self::getContent($url);
+        $reinFo = self::extract($op, $patKey);
+        $countNum = self::countPat($patKey);
+        $reinFo = $reinFo[$countNum];
+        $i = 0;
+        foreach ($reinFo as $key => $value) {
+            $arr[$i] = $value;
+            $i++;
+            $arr1 = array_chunk($arr, 4);
+        }
+        $i = 0;
+        foreach ($arr1 as $k => $dd) {
+            foreach ($dd as $d) {
+                $dd_arr[] = $d;
+            }
+            $list_dd = join(',', $dd_arr);
+            unset($dd_arr);
+            $i++;
+//            $sql = "UPDATE `dyLOL` set `keyWord` = '" . $list_dd . "'
+//            where id = '" . $i . "'";
+//            echo $list_dd . "<br>";
+//            $stmt = $conn->prepare($sql);
+//            $stmt->execute();
         }
     }
 }
 
-$crawler = new Spider();
-$re = $crawler->returnAll($url, $pattern);
+
+
+

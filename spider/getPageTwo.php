@@ -6,11 +6,12 @@
  * Time: 17:00
  */
 
-require_once "getPageOne.php";
-foreach ($getArr as $value){
-    echo$value."<br>";
-    preg_match_all("/href=\"(.*?)\"/ism",$value, $fun3);
-}
+//require_once "getPageOne.php";
+//foreach ($getArr as $value){
+//    echo$value."<br>";
+//    preg_match_all("/href=\"(.*?)\"/ism",$value, $fun3);
+//}
+
 
 
 //$url = "https://secure.php.net/manual/en/".$fun3[1][0];

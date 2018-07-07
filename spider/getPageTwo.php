@@ -6,19 +6,37 @@
  * Time: 17:00
  */
 
-//require_once "getPageOne.php";
-//foreach ($getArr as $value){
-//    echo$value."<br>";
-//    preg_match_all("/href=\"(.*?)\"/ism",$value, $fun3);
-//}
+/**
+ * @param $id
+ * @param $getTwo
+ * @param $conn
+ * @return mixed
+ */
+function getPageTwo($getTwo,$conn)
+{
+    preg_match_all("/<li>.*?<\/ul><\/li>/ism",$getTwo[0],$getTwoNa);
+    foreach ($getTwoNa[0] as $value) {
+        preg_match_all("/<a .*?>.*?<\/a>/is",$value,$getTwoNam);
+        preg_match_all("/>(.*)<\/a>/ism", $getTwoNam[0][0], $name2);
+        //表单2
+        echo 2;
+
+        if ($name2[1][0]) {
+            $sql = "insert into spiderTwo (name) values  (:name) ";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':name', $name2[1][0]);
+            $stmt->execute();
+            $stmt = null;
+        } else {
+            echo "抓取失败";
+        }
+
+
+    }
+
+    $conn = null;
 
 
 
-//$url = "https://secure.php.net/manual/en/".$fun3[1][0];
-//$patOne = '/<ul class=\"chunklist chunklist_set\">(.*?)<\/ul><\/div>/ism';
-//$patOneN = '/<li>.*?<\/ul><\/li>/ism';
-//
-//$connect = new Connect();
-//$conn = $connect->conn();
-//$getOne = new Spider();
-//$getOne = $getOne -> returnAll($url, $patOne);
+
+}

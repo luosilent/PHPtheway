@@ -62,7 +62,7 @@ function selectSort($arr) {
     }
     return $arr;
 }
-$arr = array(11,6,1,2,3,7,4,8,9,5,0);
+$arr = array(6,1,2,3,7,4,8,9,5,0);
 print_r(selectSort($arr));
 echo "<hr>";
 /**

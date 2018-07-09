@@ -5,19 +5,31 @@
  * Date: 2018/7/2
  * Time: 16:59
  */
-$array = array('FAAAAA'=> array(
-    'BAAA' => 'ww'
-));
+$str = "sluoWWsluoRR";
+$tag = "luo";
 
-function low_key_recursive(&$array, $case=CASE_LOWER, $flag_rec=false) {
-    $array = array_change_key_case($array, $case);
-    if ( $flag_rec ) {
-        foreach ($array as $key => $value) {
-            if ( is_array($value) ) {
-                low_key_recursive($array[$key], $case, true);
+function search($str, $need)
+{
+    $res      = [];
+    $str_len  = strlen($str);
+    $need_len = strlen($need);
+    for ($i = 0; $i < $str_len; ++$i) {
+        for ($n = 0; $n < $need_len; ++$n) {
+            if (isset($str[$i + $n]) && $need[$n] != $str[$i + $n]) {
+                break;
+            }
+            if ($n == $need_len - 1) {
+                $res[] = $i;
             }
         }
     }
+    return $res;
 }
-low_key_recursive($array, CASE_LOWER,true);
-print_r($array);
+
+//var_dump(search($str, $tag), count(search($str, $tag)));
+
+$arrSearch = search($str,$tag);
+$arrCount = count($arrSearch);
+print_r($arrSearch);
+echo "<br>";
+echo $arrCount;

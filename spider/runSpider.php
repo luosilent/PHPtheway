@@ -42,13 +42,14 @@ foreach ($getArr as $value) {
  * 第三个表
  */
 
-
-foreach ($getArr3[0] as $value) {
-    $patThree ='/<ul class=\"chunklist chunklist_reference\">.*?<\/ul>/ism';
-    $valueName =  strtolower($value);
-    $urlThree = "https://secure.php.net/manual/en/ref.".$valueName.".php";
-    $getThree = $getPage->returnAll($urlThree, $patThree);
-    $getArr4 = getPageThree($getThree, $conn);
+$patThree = '/<ul class=\"chunklist chunklist_book chunklist_children\">.*?<\/ul>/ism';
+foreach ($getArr3 as $k => $dd) {
+    foreach ($dd as $item) {
+        $urlThree = "https://secure.php.net/manual/en/".$item;
+        $getThree = $getPage->returnAll($urlThree, $patThree);
+//        print_r($getThree);exit;
+        $getArr4 = getPageThree($getThree, $conn);
+    }
 }
 
 

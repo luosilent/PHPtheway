@@ -18,6 +18,7 @@ function getPageTwo($getTwo,$conn)
     foreach ($getTwoNa[0] as $value) {
         preg_match_all("/<a .*?>.*?<\/a>/is",$value,$getTwoNam);
         preg_match_all("/>(.*)<\/a>/ism", $getTwoNam[0][0], $nameTwo);
+        preg_match_all("/href=\"(.*?)\"/ism",$getTwoNam[0][0], $href2);
         //表单2
 
 
@@ -31,14 +32,13 @@ function getPageTwo($getTwo,$conn)
 //            echo "抓取失败";
 //        }
 
-
+        $arrARR[] = $href2[1][0];
     }
 //print_r($nameTwo[1]);
 //    echo "<br>";
 
     $conn = null;
-    return $nameTwo[1];
-
+    return $arrARR;
 
 
 

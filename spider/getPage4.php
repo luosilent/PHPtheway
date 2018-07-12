@@ -11,7 +11,7 @@ $connect = new Connect();
 $getPage = new Spider();
 $conn = $connect->conn();
 
-$sql = "select * from spider3 where 1=1 limit 0,8";
+$sql = "select * from spider3 where 1=1 ";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $res = array();
@@ -20,7 +20,6 @@ while ($obj = $stmt->fetch()) {
 }
 
 foreach ($res as $re) {
-//    print_r($re['url']);exit;
     $url = "http://php.net/manual/en/" . $re['url'];
     $pat1 = '/<div class=\"refsect1 description\".*?>(.*)<div class=\"refsect1 parameters\" .*?>/ism';
     $description = $getPage->returnAll($url, $pat1);
@@ -30,8 +29,6 @@ foreach ($res as $re) {
         $des = "null";
     }
 
-
-//    var_dump($description);exit;
     $pat2 = '/<div class=\"refsect1 parameters\".*?>(.*?)<\/div>/s';
     $parameters = $getPage->returnAll($url, $pat2);
     if ($parameters) {
@@ -39,8 +36,6 @@ foreach ($res as $re) {
     } else {
         $par = "null";
     }
-
-//    var_dump($parameters);exit;
 
     $pat3 = '/<div class=\"refsect1 returnvalues\".*?>.*?<\/div>/s';
     $returnValues = $getPage->returnAll($url, $pat3);
@@ -74,11 +69,7 @@ foreach ($res as $re) {
         $see = "null";
     }
 
-
-//    foreach ($description as $value){
-//        $des = htmlRe($value);
-//    }
-    $sql2 = "insert into spider5 (aid,function,description,parameters,returnValues,changeLog,notes,seeAlso) 
+    $sql2 = "insert into spider4 (aid,function,description,parameters,returnValues,changeLog,notes,seeAlso) 
         values (:aid,:function,:description,:parameters,:returnValues,:changeLog,:notes,:seeAlso);";
     $conn = $connect->conn();
     $stmt2 = $conn->prepare($sql2);
@@ -91,9 +82,9 @@ foreach ($res as $re) {
     $stmt2->bindParam(":notes", $not);
     $stmt2->bindParam(":seeAlso", $see);
     $stmt2->execute();
-
-    $stmt2 = '';
-    $conn = "";
+//
+//    $stmt2 = '';
+//    $conn = "";
 
 
 }
@@ -101,7 +92,7 @@ foreach ($res as $re) {
 function htmlRe($a)
 {
     if (strpos($a, '<', 0) === false) {
-        $a = str_replace( "\n", "", $a);
+        $a = str_replace("\n", "", $a);
         echo $a;
     } else {
         while (strpos($a, '<', 0) >= 0) {
@@ -109,11 +100,11 @@ function htmlRe($a)
                 break;
             $x1 = strpos($a, '<', 0);
             $x2 = strpos($a, '>', 0);
-            if ($x2 === false)              //这里有if的原因是 特殊需要,可能只有<开始,没有>结束
+            if ($x2 === false)
                 $x2 = strlen($a);
             $t = substr($a, $x1, $x2 - $x1 + 1);
             $a = str_replace($t, '', $a);
-            $a = str_replace( "\n", "", $a);
+            $a = str_replace("\n", "", $a);
         }
 
         return $a;

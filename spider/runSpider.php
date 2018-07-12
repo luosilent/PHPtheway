@@ -7,9 +7,9 @@
  */
 require 'Connect.php';
 require "phpSpider.php";
-require "getPageOne.php";
-require "getPageTwo.php";
-require "getPageThree.php";
+require "getPage1.php";
+require "getPage2.php";
+require "getPage3.php";
 
 
 $connect = new Connect();
@@ -22,9 +22,8 @@ $conn = $connect->conn();
 $urlOne = "https://secure.php.net/manual/en/funcref.php";
 $patOne = '/<ul class=\"chunklist chunklist_set\">(.*?)<\/ul><\/div>/ism';
 $getOne = $getPage->returnAll($urlOne, $patOne);
+$getArr = getPage1($getOne, $conn);
 
-$getArr = getPageOne($getOne, $conn);
-//print_r($getArr);
 
 /**
  * 第二个表
@@ -32,23 +31,20 @@ $getArr = getPageOne($getOne, $conn);
 foreach ($getArr as $value) {
     preg_match_all("/href=\"(.*?)\"/ism", $value, $getArrT);
     $urlTwo = "https://secure.php.net/manual/en/" . $getArrT[1][0];
-//    var_dump($urlTwo);exit;
     $getTwo = $getPage->returnAll($urlTwo, $patOne);
-    $getArr2 = getPageTwo($getTwo, $conn);
+    $getArr2 = getPage2($getTwo, $conn);
     $getArr3[] = $getArr2;
 }
 
 /**
  * 第三个表
  */
-
 $patThree = '/<ul class=\"chunklist chunklist_book chunklist_children\">.*?<\/ul>/ism';
 foreach ($getArr3 as $k => $dd) {
     foreach ($dd as $item) {
-        $urlThree = "https://secure.php.net/manual/en/".$item;
+        $urlThree = "https://secure.php.net/manual/en/" . $item;
         $getThree = $getPage->returnAll($urlThree, $patThree);
-//        print_r($getThree);exit;
-        $getArr4 = getPageThree($getThree, $conn);
+        $getArr4 = getPage3($getThree, $conn);
     }
 }
 

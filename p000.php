@@ -209,7 +209,7 @@ echo test(1,3,4,5);
  * return 本身只能返回一个值,不能返回数组,我们通过这种方法来实现返回数组,并在调用时用list接收
  * return之后的代码不在执行,这里,echo "111"代码执行不了,所以浏览器只返回了28 11
  */
-/*
+
 function aak($a,$b){
     $sum = $a * $b;
     $sum2 = $a + $b;
@@ -218,7 +218,7 @@ function aak($a,$b){
 list($a1,$a2) = aak(4,7);
 echo $a1." ".$a2;
 //浏览器显示 28 11
-*/
+
 
 
 
@@ -234,12 +234,12 @@ echo $a1." ".$a2;
  * 允许临时创建一个没有指定名称的函数,经常用作回调函数(callback)参数的值
  * 闭包函数也可以作为变量的值来使用(比如此例)
  */
-/*
+
 $greet = function ($name){
     echo "hello,$name";
 };
 $greet('xiaobudiu'); //浏览器显示 hello,xiaobudiu
-*/
+
 
 
 /**
@@ -248,7 +248,7 @@ $greet('xiaobudiu'); //浏览器显示 hello,xiaobudiu
  * 1,1,2,3,5,8...
  *$n表示第几个数
  */
-/*
+
 function compute($n) {
     if ($n > 2) {
         $arr[$n] = compute($n - 1) + compute($n - 2);
@@ -258,14 +258,14 @@ function compute($n) {
     }
 }
 echo compute(5);
-*/
+
 
 
 /**
  * 迭代思想
  * 利用变量的原值推算出变量的一个新值
  */
-/*
+
 function diedai($n){
     for ($i = 0 , $j = 0; $i < $n; $i++) {
         $j = $i + $j;
@@ -273,40 +273,40 @@ function diedai($n){
     return $j;
 }
 echo diedai(50);
-*/
+
 
 
 /**
  * 单引号和双引号
  */
-/*
+
 $str = "i dont't want to go shoping";
 echo ucwords($str);
-*/
+
 
 
 /**
  * 字符串替换
  *str_ireplace();str_replace()
  */
-/*
+
 $str = "hello,world,hello,world";
 //echo str_replace('or','dd',$str);
 $replace = 'hi';
 echo substr_replace($str,$replace,0,7);//将第0到第7个字符替换成$replace字符
 //浏览器显示hiorld,hello,world
-*/
+
 
 
 /**
  *
  * 截取字符串
  */
-/*
+
 $str = 'abcdefg';
 echo substr($str,0,4);
 //浏览器显示:abcd
-*/
+
 
 
 
@@ -314,7 +314,7 @@ echo substr($str,0,4);
  * 去掉字符串首尾特殊字符
  * trim();ltrim();rtrim()
  */
-/*
+
 $str = ' .abcded  .gk.';
 echo $str;
 echo "<hr>";
@@ -326,7 +326,7 @@ echo $str;
 echo '<hr>';
 $str = rtrim($str,'.');//（右侧的点被去掉了）
 echo $str;
-*/
+
 
 
 /**

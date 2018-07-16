@@ -1,0 +1,7 @@
+{
+    "require": {
+        "owner888/phpspider": "^2.1",
+        "paquettg/php-html-parser": "^1.7",
+        "league/html-to-markdown": "^4.7"
+    }
+}

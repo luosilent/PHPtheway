@@ -70,8 +70,8 @@ class DySpider
             echo ($key + 1) . '.' . $value . "<br>";
 
 //            插入dyLOL表
-//             $sql = "INSERT INTO `dyLOL` (id, user)
-//             VALUES ('".$i."','".$value."')";
+            $sql = "INSERT INTO `dyLOL` (id, user)
+            VALUES ('".$i."','".$value."')";
 //            插入dyJDQS表
 //            $sql = "INSERT INTO `dyJDQS` (id, user)
 //             VALUES ('".$i."','".$value."')";
@@ -79,8 +79,8 @@ class DySpider
 //            $sql = "INSERT INTO `dyYZ` (id, user)
 //             VALUES ('".$i."','".$value."')";
 //            更新User表
-            $sql = "UPDATE `dyLOL` set `user` = '" . $value . "'
-              where id= '" . $i . "'";
+//             $sql = "UPDATE `dyLOL` set `user` = '" . $value . "'
+//               where id= '" . $i . "'";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
         }

@@ -7,43 +7,33 @@
  */
 header('Content-Type:text/html;charset=utf-8');
 
-require_once("Connect.php");
-$url = "http://www.zjpp.com.cn/Topic/List?tag=PHP";
-$html = getHtml($url);
-//$reg1 = '/<div class=\"covimg-wrap\">(.*?)<\/div>/ism';
-$reg1 = '/<h3>(.*?)<\/h3>/ism';
-preg_match_all($reg1, $html, $pat1);
-//	print_r($pat1);exit;
-$reg2 = "/>(.*?)<\/a>/ism";
-foreach ($pat1[0] as $value) {
-//    echo $value;exit;
-    preg_match_all($reg2, $value, $pat2);
-//    print_r($pat2);exit;
-    preg_match_all("/<a .* href=\"(.*)\">/ism", $pat2[0][0], $pat3);
-//    print_r($pat3[1][0]);exit;
-    preg_match_all("/<.*>(.*?)<\/a>/ism", $pat2[0][0], $pat4);
-//    print_r($pat4[1][0]);exit;
-    $url = $pat3[1][0];
-    $title = trim($pat4[1][0]);
-//    $encode = mb_detect_encoding($title, "UTF-8");
 
-//    $title1 = mb_convert_encoding($title, 'UTF-8','ASCII,GB2312,gbk,UTF-8');
-//    echo mb_detect_encoding($title1);
+function getPage1($reg1,$html1)
+{
+    preg_match_all($reg1, $html1, $pat1);
 
-    echo $title;
+    foreach ($pat1[0] as $value) {
+        preg_match_all("/>(.*?)<\/a>/ism", $value, $pat2);
+        preg_match_all("/<a .* href=\"(.*)\">/ism", $pat2[0][0], $pat3);
+        preg_match_all("/<.*>(.*?)<\/a>/ism", $pat2[0][0], $pat4);
 
-    echo "<br>";
-    if ($title) {
-        $conn = conn();
-        $sql = "insert into luo_zj2 (title,url) values (:title,:url) ";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':url', $url);
-        $stmt->execute();
-        $id = $conn->lastInsertId();//
-        echo "第" . $id . "条数据抓取成功" . '<br>';
-        $stmt = null;
+        $url1 = "http://www.zjpp.com.cn" . $pat3[1][0]; // 首页的视频链接
+        $title1 = trim($pat4[1][0]); // 首页的视频标题
+
+
+//        if ($title1) {
+//            $conn = conn();
+//            $sql = "insert into spider_zj1 (title,url) values (:title,:url) ";
+//            $stmt = $conn->prepare($sql);
+//            $stmt->bindParam(':title', $title1);
+//            $stmt->bindParam(':url', $url1);
+//            $stmt->execute();
+//            $id = $conn->lastInsertId();//
+////            echo "第" . $id . "条数据抓取成功，视频为:" . $title1 . '<br>';
+//            $stmt = null;
+//        }
+        $reArr[] = array($title1 => $url1);
     }
-
     $conn = null;
+    return $reArr;
 }

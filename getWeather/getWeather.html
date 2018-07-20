@@ -1,0 +1,47 @@
+<!--by luosilent-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
+    <title>luosilent天气查询</title>
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script language="javascript">
+        function getWeather() {
+            if ($('#city').val() == "") {
+                $('#msg').html("请输入城市名称再提交!");
+                $('#city').focus;
+                return false;
+            }
+            ajax_post();
+        }
+
+        function ajax_post() {
+            $.post("getWeather.php", {city: $('#city').val()},
+                function (data) {
+                    //$('#msg').html("please enter the city!");
+                    // alert(data);
+                    $('#msg').html(data);
+                },
+                "text");//这里返回的类型有：json,html,xml,text
+        }
+    </script>
+</head>
+<body>
+<form id="ajaxform" name="ajaxform" method="post" action="getWeather.php">
+    <div style="text-align:center;">
+        <p>
+            请输入城市名称：<input type="text" name="city" id="city" value="杭州" size="10"/>
+        </p>
+        <p>
+            <input style="display:none"><!--防止回车键自动提交表单-->
+        </p>
+
+        <p>
+            <input name="submit" type="button" value="查询" onclick="return getWeather()"/>
+        </p>
+        <p id="msg"></p>
+    </div>
+</form>
+</body>
+</html>

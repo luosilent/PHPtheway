@@ -7,9 +7,10 @@
  */
 
 header('Access-Control-Allow-Origin:*');//允许跨域
-$theCityCode = addslashes($_POST["city"]);
+$theCityCode = htmlspecialchars($_POST["city"]);//处理用户输入
 $data = "theCityCode=$theCityCode&theUserID=";
-$ch = curl_init();
+
+//增加随机ip，防止24小时内的调用api限制次数
 $ip = "192.". rand(1, 255) .".". rand(1, 255) . "." . rand(1, 255);
 $address = GetIpFrom($ip);
 $arr = json_decode($address);
@@ -17,6 +18,7 @@ print_r( "当前随机IP为:".$arr->data->ip);
 print_r(" 地址定位到:".$arr->data->country);
 echo "<br>";
 
+$ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, "http://www.webxml.com.cn/WebServices/WeatherWS.asmx/getWeather");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_POST, 1);
@@ -32,6 +34,12 @@ if (!curl_errno($ch)) {
     echo 'Curl error: ' . curl_errno($ch);
 }
 curl_close($ch);
+
+/**
+ * 调用淘宝的ip地址接口获取地址
+ * @param string $ip
+ * @return bool|string
+ */
 function GetIpFrom($ip = ''){
     if(empty($ip)){
         $ip = '';

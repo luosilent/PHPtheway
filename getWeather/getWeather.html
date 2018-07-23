@@ -9,7 +9,7 @@
     <script language="javascript">
         function getWeather() {
             if ($('#city').val() == "") {
-                $('#msg').html("请输入城市名称再提交!");
+                $('#msg').html("请输入城市名称再查询!");
                 $('#city').focus;
                 return false;
             }
@@ -28,20 +28,18 @@
     </script>
 </head>
 <body>
-<form id="ajaxform" name="ajaxform" method="post" action="getWeather.php">
-    <div style="text-align:center;font-size:large;">
+<form style="text-align:center;font-size:2rem;" id="ajaxform" name="ajaxform" method="post" action="getWeather.php">
         <p>
-            请输入城市名称：<input style="font-size:large;" type="text" name="city" id="city" value="杭州" />
+            请输入城市名称：<input style="font-size:2rem;" type="text" name="city" id="city" value="杭州" size="10"/>
         </p>
         <p>
             <input style="display:none"><!--防止回车键自动提交表单-->
         </p>
 
         <p>
-            <input name="submit" type="button" value="查询" onclick="return getWeather()"/>
+            <input style="font-size:2rem;" name="submit" type="button" value="查询" onclick="return getWeather()"/>
         </p>
         <p id="msg"></p>
-    </div>
 </form>
 </body>
 </html>

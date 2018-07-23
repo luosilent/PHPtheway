@@ -6,12 +6,17 @@
  * Time: 14:03
  */
 
-header('Access-Control-Allow-Origin:*');//¿çÓò
+header('Access-Control-Allow-Origin:*');//å…è®¸è·¨åŸŸ
 $theCityCode = addslashes($_POST["city"]);
 $data = "theCityCode=$theCityCode&theUserID=";
 $ch = curl_init();
-$ip = "100.100." . rand(1, 255) . "." . rand(1, 255);
-//echo $ip;//¼ÓÉÏÎ±ÔìipÃ»ÓÐ24Ð¡Ê±µã»÷ÏÞÖÆ¡¢ÃÀ×Ì×Ì
+$ip = "192.". rand(1, 255) .".". rand(1, 255) . "." . rand(1, 255);
+$address = GetIpFrom($ip);
+$arr = json_decode($address);
+print_r( "å½“å‰éšæœºIPä¸º:".$arr->data->ip);
+print_r(" åœ°å€å®šä½åˆ°:".$arr->data->country);
+echo "<br>";
+
 curl_setopt($ch, CURLOPT_URL, "http://www.webxml.com.cn/WebServices/WeatherWS.asmx/getWeather");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_POST, 1);
@@ -27,3 +32,10 @@ if (!curl_errno($ch)) {
     echo 'Curl error: ' . curl_errno($ch);
 }
 curl_close($ch);
+function GetIpFrom($ip = ''){
+    if(empty($ip)){
+        $ip = '';
+    }
+    $res = @file_get_contents('http://ip.taobao.com/service/getIpInfo.php?ip='.$ip);
+    return $res;
+}

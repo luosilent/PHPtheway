@@ -6,7 +6,7 @@
  * Time: 16:54
  */
 
-/*»ñÈ¡¿Í»§¶ËÕæÊµµÄIP*/
+/*èŽ·å–å®¢æˆ·ç«¯çœŸå®žçš„IP*/
 function GetIps(){
     $realip = '';
     $unknown = 'unknown';
@@ -33,7 +33,7 @@ function GetIps(){
     return $realip;
 }
 
-/*°ÑIP´«ÈëÐÂÀËAPI·µ»ØÊý¾Ý»ñÈ¡ipµÄÕæÊµ¹éÊôµØ*/
+/*æŠŠIPä¼ å…¥æ–°æµªAPIè¿”å›žæ•°æ®èŽ·å–ipçš„çœŸå®žå½’å±žåœ°*/
 function GetIpFrom($ip = ''){
     if(empty($ip)){
         $ip = GetIps();
@@ -41,11 +41,11 @@ function GetIpFrom($ip = ''){
     $res = @file_get_contents('http://ip.taobao.com/service/getIpInfo.php?ip='.$ip);
     return $res;
 }
-$ip = "192.100." . rand(1, 255) . "." . rand(1, 255);
+$ip = "192.". rand(1, 255) .".". rand(1, 255) . "." . rand(1, 255);
 $address = GetIpFrom($ip);
 //print_r($address);
 $arr = json_decode($address);
-print_r( "IP:".$arr->data->ip);
+print_r( "å½“å‰éšæœºIPä¸º :".$arr->data->ip);
 echo "<br>";
-print_r("Address:".$arr->data->country);
+print_r("åœ°å€å®šä½Address :".$arr->data->country);
 

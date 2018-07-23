@@ -29,6 +29,7 @@ curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
 
 $rtn = curl_exec($ch);
 if (!curl_errno($ch)) {
+    $rtn = preg_replace("/\d.gif/"," ","$rtn");
     echo $rtn;
 } else {
     echo 'Curl error: ' . curl_errno($ch);

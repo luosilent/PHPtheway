@@ -1,15 +1,34 @@
 <!--by luosilent-->
+<?php
+require_once "getCity.php";
+$ip = $_SERVER['REMOTE_ADDR'];
+$address = GetIpFrom($ip);
+//print_r($address);
+$arr = json_decode($address);
+$city=$arr->data->city;
+$dip=iconv("utf-8","gb2312",$arr->data->ip);
+print_r( "å½“å‰IPä¸º :".$dip);
+if ($city == "å†…ç½‘IP"){
+    $city="æœªçŸ¥åŸå¸‚";
+    print_r("å½“å‰åŸå¸‚ä¸º:æœªçŸ¥");
+}else{
+    print_r("å½“å‰åŸå¸‚ä¸º:".$city);
+}
+
+
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
-    <title>luosilentÌìÆø²éÑ¯</title>
+    <title>luosilentå¤©æ°”æŸ¥è¯¢</title>
     <script type="text/javascript" src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
     <script language="javascript">
         function getWeather() {
             if ($('#city').val() == "") {
-                $('#msg').html("ÇëÊäÈë³ÇÊĞÃû³ÆÔÙ²éÑ¯!");
+                $('#msg').html("è¯·è¾“å…¥åŸå¸‚åç§°å†æŸ¥è¯¢!");
                 $('#city').focus;
                 return false;
             }
@@ -23,21 +42,22 @@
                     // alert(data);
                     $('#msg').html(data);
                 },
-                "text");//ÕâÀï·µ»ØµÄÀàĞÍÓĞ£ºjson,html,xml,text
+                "text");//è¿™é‡Œè¿”å›çš„ç±»å‹æœ‰ï¼šjson,html,xml,text
         }
     </script>
 </head>
 <body>
+
 <form style="text-align:center;font-size:2rem;" id="ajaxform" name="ajaxform" method="post" action="getWeather.php">
         <p>
-            ÇëÊäÈë³ÇÊĞÃû³Æ£º<input style="font-size:2rem;" type="text" name="city" id="city" value="º¼Öİ" size="10"/>
+            è¯·è¾“å…¥åŸå¸‚åç§°ï¼š<input style="font-size:2rem;" type="text" name="city" id="city" value="<?=$city?>" size="10"/>
         </p>
         <p>
-            <input style="display:none"><!--·ÀÖ¹»Ø³µ¼ü×Ô¶¯Ìá½»±íµ¥-->
+            <input style="display:none"><!--é˜²æ­¢å›è½¦é”®è‡ªåŠ¨æäº¤è¡¨å•-->
         </p>
 
         <p>
-            <input style="font-size:2rem;" name="submit" type="button" value="²éÑ¯" onclick="return getWeather()"/>
+            <input style="font-size:2rem;" name="submit" type="button" value="å¤©æ°”æŸ¥è¯¢" onclick="return getWeather()"/>
         </p>
         <p id="msg"></p>
 </form>

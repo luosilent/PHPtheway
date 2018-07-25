@@ -6,6 +6,8 @@
  * Time: 22:38
  */
 require_once "simple_html_dom.php";
+require_once "Connect.php";
+$conn = conn();
 
 $html = get_url("https://www.lotto-8.com/listltohk.asp");
 //    echo $html;exit();
@@ -32,12 +34,26 @@ foreach ($trs as $tr) {
     }
 
 }
+foreach ($arrR as $key => $value) {
+    $arr[] = $value;
+    $arr1 = array_chunk($arr, 5);
+}
+$i = 0;$j = 0;
+foreach ($arr1 as  $v) {
+
+//    echo $v[$i+1],$v[$i+2],$v[$i+3],$v[$i+4],"<br>";
+
+        $j++;
+        $sql = "INSERT INTO `liu` (id, stime,small,big,etime)
+            VALUES ('" . $j . "','" . $v[$i + 1] . "','" . $v[$i + 2] . "','" . $v[$i + 3] . "','" . $v[$i + 4] . "')";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+}
 
 
-print_r($arrR);
+//print_r($arrR);
 //file_put_contents("result.csv", $result);
-
-
 
 function get_url($url)
 {

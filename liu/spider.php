@@ -9,31 +9,38 @@ require_once "simple_html_dom.php";
 require_once "Connect.php";
 $conn = conn();
 
-$html = get_url("https://www.lotto-8.com/listltohk.asp");
+//$html = get_url("https://www.lotto-8.com/listltohk.asp?indexpage=2&orderby=new");
 //    echo $html;exit();
-if (!$html)
-    exit("Network Error!!");
-if (strpos($html, "暂无数据") !== false)
-    exit("暂无数据 Error!!");
+for ($page = 1; $page < 50; $page++) {
+
+    $html = get_url("https://www.lotto-8.com/listltohk.asp?indexpage='$page'&orderby=new");
+//    echo $html;exit();
+    if (!$html)
+        exit("Network Error!!");
+    if (strpos($html, "暂无数据") !== false)
+        exit("暂无数据 Error!!");
 
 
-$dom = new simple_html_dom();
-$dom->load($html);
-$trs = $dom->find("table", 0)->find("tr");
+    $dom = new simple_html_dom();
+    $dom->load($html);
+    $trs = $dom->find("table", 0)->find("tr");
 
-foreach ($trs as $tr) {
-    $arr = [];
-    $arrR = [];
-    $tds = $tr->find("td");
-    foreach ($tds as $td) {
-        //过滤结果中的标签
-        $arr = strip_tags($td->innertext);
-        preg_match_all("/\d+/", $arr, $arr);
-        $result .= implode(",", $arr[0]) . "\r\n";
-        $arrR = explode("\r\n", $result);
+    foreach ($trs as $tr) {
+        $arr = [];
+        $arrR = [];
+        $tds = $tr->find("td");
+        foreach ($tds as $td) {
+            //过滤结果中的标签
+            $arr = strip_tags($td->innertext);
+            preg_match_all("/\d+/", $arr, $arr);
+            $result .= implode(",", $arr[0]) . "\r\n";
+            $arrR = explode("\r\n", $result);
+        }
+
     }
-
+//    $arrRe[]=$arrR;
 }
+//print_r($arrR);exit;
 foreach ($arrR as $key => $value) {
     $arr[] = $value;
     $arr1 = array_chunk($arr, 5);
@@ -54,6 +61,7 @@ foreach ($arr1 as $v) {
 
 
 }
+
 
 echo "爬取完成";
 //print_r($arrR);

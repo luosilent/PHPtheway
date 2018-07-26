@@ -38,20 +38,24 @@ foreach ($arrR as $key => $value) {
     $arr[] = $value;
     $arr1 = array_chunk($arr, 5);
 }
-$i = 0;$j = 0;
-foreach ($arr1 as  $v) {
+$i = 1;
+$j = 0;
+foreach ($arr1 as $v) {
 
 //    echo $v[$i+1],$v[$i+2],$v[$i+3],$v[$i+4],"<br>";
 
-        $j++;
+    if (!empty($v[$i])) {
         $sql = "INSERT INTO `liu` (id, stime,small,big,etime)
-            VALUES ('" . $j . "','" . $v[$i + 1] . "','" . $v[$i + 2] . "','" . $v[$i + 3] . "','" . $v[$i + 4] . "')";
+        VALUES ('" . $j . "','" . $v[$i] . "','" . $v[$i + 1] . "','" . $v[$i + 2] . "','" . $v[$i + 3] . "')";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
+    }
+    $j++;
+
 
 }
 
-
+echo "爬取完成";
 //print_r($arrR);
 //file_put_contents("result.csv", $result);
 
@@ -61,6 +65,7 @@ function get_url($url)
     $fcontents = file_get_contents($url);
     preg_match_all('/<table class=\"auto-style4\">(.*?) <\/table>/si', $fcontents, $match);
     $table_data = $match[0][0];
+
     return $table_data;
 
 

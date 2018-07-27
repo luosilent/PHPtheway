@@ -11,7 +11,7 @@ $conn = conn();
 
 //$html = get_url("https://www.lotto-8.com/listltohk.asp?indexpage=2&orderby=new");
 //    echo $html;exit();
-for ($page = 1; $page < 50; $page++) {
+for ($page = 1; $page < 66; $page++) {
 
     $html = get_url("https://www.lotto-8.com/listltohk.asp?indexpage='$page'&orderby=new");
 //    echo $html;exit();
@@ -52,8 +52,10 @@ foreach ($arr1 as $v) {
 //    echo $v[$i+1],$v[$i+2],$v[$i+3],$v[$i+4],"<br>";
 
     if (!empty($v[$i])) {
-        $sql = "INSERT INTO `liu` (id, stime,small,big,etime)
-        VALUES ('" . $j . "','" . $v[$i] . "','" . $v[$i + 1] . "','" . $v[$i + 2] . "','" . $v[$i + 3] . "')";
+        $stime = str_replace(",","-",$v[$i]);
+        $etime = str_replace(",","-",$v[$i + 3]);
+        $sql = "INSERT INTO `liu` (id, stime,small,big,etime,cdate)
+        VALUES ('" . $j . "','" . $stime . "','" . $v[$i + 1] . "','" . $v[$i + 2] . "','" . $etime . "',now())";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
     }

@@ -1,8 +1,9 @@
-
-create table liu(
-id int(11) primary key not null auto_increment,
-stime varchar(255) not null,
-small varchar(255) not null,
-big varchar(255) not null,
-etime varchar(255) not null
-);
+CREATE TABLE `liu` (
+  `id` int(11) NOT NULL,
+  `stime` date NOT NULL,
+  `small` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `big` int(10) NOT NULL,
+  `etime` date NOT NULL,
+  `cdate` date NOT NULL,
+  `post_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

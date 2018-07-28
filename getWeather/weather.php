@@ -23,7 +23,7 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-responsive-collapser">
-            <li><a href="http://localhost/php/PHPtheway/getWeather/weather.php">天气查询</a></li>
+            <li class="active"><a href="http://localhost/php/PHPtheway/getWeather/weather.php">天气查询</a></li>
             <li><a href="http://localhost/php/PHPtheway/liu/index.html">天气查询</a></li>
             <li><a href="http://bbs.luosilent.top/lcg/index.php">开奖查询</a></li>
             <li><a href="#about">待开发</a></li>

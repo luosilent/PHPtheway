@@ -11,7 +11,7 @@ $conn = conn();
 
 //$html = get_url("https://www.lotto-8.com/listltohk.asp?indexpage=2&orderby=new");
 //    echo $html;exit();
-for ($page = 1; $page < 6; $page++) {
+for ($page = 1; $page < 66; $page++) {
 
     $html = get_url("https://www.lotto-8.com/listltohk.asp?indexpage='$page'&orderby=new");
 //    echo $html;exit();

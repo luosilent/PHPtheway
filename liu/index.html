@@ -1,43 +1,57 @@
+<!--http://bbs.luosilent.top/lcg/index.html 这是线上地址-->
 <!DOCTYPE html>
-<html lang="en">
+<html >
 <head>
     <meta charset="UTF-8">
+    <title>luosilent</title>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <title>查询工具</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+
 </head>
+
 <body>
-<div class="container">
-    <div class="navbar navbar-inverse navbar-static-top" role="navigation">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <!-- 确保无论是宽屏还是窄屏，navbar-brand都显示 -->
-            <a class="navbar-brand" href="#">Luosilent</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-responsive-collapser">
-                <li class="active"><a href="http://bbs.luosilent.top/getWeather/weather.php">天气查询</a></li>
-                <li class="dropdown">
-                    <a href="http://localhost/PHPtheway/liu/index.php" class="dropdown-toggle" data-toggle="dropdown">
-                        开奖信息
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">开奖查询</a></li>
-                        <li><a href="#">更多信息</a></li>
-                    </ul>
-                </li>
-                <li><a href="#about">待开发</a></li>
-            </ul>
-        </div>
+<div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <!-- 确保无论是宽屏还是窄屏，navbar-brand都显示 -->
+        <a class="navbar-brand" href="http://localhost/php/PHPtheway/liu/index.html">Luosilent</a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-responsive-collapser">
+            <li><a href="http://localhost/php/PHPtheway/getWeather/weather.php">天气查询</a></li>
+            <li><a href="http://localhost/php/PHPtheway/liu/index.php">开奖查询</a></li>
+            <li><a href="http://localhost/php/PHPtheway/liu/more.php">开奖记录</a></li>
+            <li><a href="#about">待开发</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    个人网站
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="http://luosilent.top/">博客</a></li>
+                    <li><a href="http://bbs.luosilent.top/">论坛</a></li>
+                </ul>
+            </li>
+        </ul>
     </div>
 </div>
+
+<!-- setup our canvas element -->
+<canvas id="canvas">Canvas is not supported in your browser.</canvas>
+
+<script src="js/index.js"></script>
+
+
 
 </body>
 </html>

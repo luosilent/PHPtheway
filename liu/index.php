@@ -119,9 +119,9 @@ require_once 'Connect.php';
                     if ($_GET["word1"] && !($_GET["word2"] && !($_GET["word3"]))) {
                         $sql2 .= "and stime ='{$_GET['word1']}' limit 0,5";
                     } elseif ($_GET["word2"] && !($_GET["word1"] && !($_GET["word3"]))) {
-                        $sql2 .= "and big ='{$_GET['word2']}' limit 0,5";
+                        $sql2 .= "and big ='{$_GET['word2']}' order by `stime` desc limit 0,5";
                     } elseif ($_GET['word3'] && !($_GET["word2"] && !($_GET["word1"]))) {
-                        $sql2 .= "and big = '{$_GET['word3']}' limit 0,1";
+                        $sql2 .= "and big = '{$_GET['word3']}' order by `stime` desc limit 0,2";
                     } else {
                         $sql2 .= "order by `stime` desc limit 0,5;";
                     }
@@ -129,25 +129,26 @@ require_once 'Connect.php';
                     try {
                         $result = $conn->prepare($sql2);
                         $res = $result->execute();
-                        $row = $result->fetch();
                         $num = $result->rowCount();
-                        if ($result->rowCount()) {
-                            if ($num < 2) {
-                                echo "<tr><th>上次的开奖时间</th>
+                        if ($num) {
+                            if ($num < 3) {
+                                while ($row = $result->fetch()) {
+                                    echo "<tr><th>上次的开奖时间</th>
                                     <th>小码</th>
                                     <th>特码</th></tr>";
-                                $sTime = strtotime($row['stime']);
-                                $now = strtotime(date("y-m-d"));
-                                $dDime = ceil($now - $sTime) / 86400;
-                                echo '<tr><td>' . $row['stime'] . '</td>';
-                                echo '<td>' . $row['small'] . '</td>';
-                                echo '<td>' . $row['big'] . '</td></tr>';
-                                echo "<tr><th>距今</th>
+                                    $sTime = strtotime($row['stime']);
+                                    $now = strtotime(date("y-m-d"));
+                                    $dDime = ceil($now - $sTime) / 86400;
+                                    echo '<tr><td>' . $row['stime'] . '</td>';
+                                    echo '<td>' . $row['small'] . '</td>';
+                                    echo '<td>' . $row['big'] . '</td></tr>';
+                                    echo "<tr><th>距今</th>
                                     <th>小码</th>
                                     <th>特码</th></tr>";
-                                echo "</tr><td>$dDime 天</td>";
-                                echo '<td>' . $row['small'] . '</td>';
-                                echo '<td>' . $row['big'] . '</td></tr>';
+                                    echo "</tr><td>$dDime 天</td>";
+                                    echo '<td>' . $row['small'] . '</td>';
+                                    echo '<td>' . $row['big'] . '</td></tr>';
+                                }
                             }
                             if ($num > 2) {
                                 echo "<tr><th>开奖日期</th>

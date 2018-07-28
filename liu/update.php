@@ -57,11 +57,27 @@ $d = $arr1[1][4];
 
 $stime = str_replace(",", "-", $a);
 $etime = str_replace(",", "-", $d);
-$sql = "INSERT INTO `liu` (stime,small,big,etime,cdate)
-        VALUES ('" . $stime . "','" . $b . "','" .$c . "','" . $etime . "',now())";
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-
+try {
+    $sql1 = "SELECT  *  from `liu`  order by `stime` desc limit 0,1 ;";
+    $result1 = $conn->prepare($sql1);
+    if ($result1->execute()) {
+        $row = $result1->fetch();
+        $oldTime = $row['etime'];
+    }
+    $newTime=strtotime ($stime);
+    $oldTime=strtotime ($oldTime);
+    if ($newTime == $oldTime) {
+        $sql = "INSERT INTO `liu` (stime,small,big,etime,cdate)
+        VALUES ('" . $stime . "','" . $b . "','" . $c . "','" . $etime . "',now())";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        echo "已更新最新数据了";
+    } else {
+        echo("最新数据还没更新");
+    }
+} catch (PDOException $e) {
+    echo("最新数据还没更新，请稍后重试");
+}
 
 //echo "爬取完成";
 //print_r($arrR);

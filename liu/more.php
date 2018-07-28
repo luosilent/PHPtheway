@@ -80,7 +80,7 @@ function conn()
                     <?php
                     $conn = conn();
                     for ($i = 1; $i < 50; $i++) {
-                        $sql = "SELECT  *  from `liu` where `big` = '{$i}' limit 0,1 ;";
+                        $sql = "SELECT  *  from `liu` where `big` = '{$i}' order by `stime` desc limit 0,1 ;";
                         $stmt = $conn->prepare($sql);
                         $stmt->execute();
                         while ($row = $stmt->fetch()) {

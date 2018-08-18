@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .container {
+            width: 800px;
+            margin: 0 auto;
+        }
+        .container .address {
+            margin: 20px 0;
+        }
+        .container .address select {
+            width: 150px;
+            height: 28px;
+            margin-right: 50px;
+        }
+        .container .address span {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h3>请选择地址</h3>
+    <form name="form1"  method="POST" action="area.php">
+    <div class="address">
+        <span>省份</span>
+        <select name="province" id="province" onchange="provinceChange()">
+            <option value="0">请选择</option>
+        </select>
+        <span>城市</span>
+        <select name="city" id="city" onchange="cityChange()">
+            <option value="0">请选择</option>
+        </select>
+        <span>地区</span>
+        <select name="area" id="area">
+            <option value="0">请选择</option>
+        </select>
+    </div>
+        <input type="submit" id="trade_submit" value="提交" >
+    </form>
+</div>
+<script src="regions.js"></script>
+<script type="text/javascript">
+    //定义工具类
+    var tools = {
+        each_fun: function (num, total, callback) {
+            for (var i = num; i < total; i++) {
+                callback(i)
+            }
+        }
+    };
+    //获取DOM节点
+    var oDom = {
+        province: document.getElementById('province'),
+        city: document.getElementById('city'),
+        area: document.getElementById('area')
+    };
+    //初始化
+    function init() {
+        var provinceLen = addressData.length;
+        tools.each_fun(0, provinceLen, function (i) {
+            var opt = document.createElement('option');
+            opt.text = addressData[i].name;
+            opt.value = addressData[i].name;
+            oDom.province.appendChild(opt);
+        })
+    }
+    //省份选择事件
+    function provinceChange() {
+        oDom.city.innerHTML = '<option value="0">请选择</option>';//清空城市下拉框数据
+        oDom.area.innerHTML = '<option value="0">请选择</option>';//清空地区下拉框数据
+        var index = oDom.province.selectedIndex;//获取选中省份option下标
+        var province = oDom.province.options[index].value;//获取选中省份
+        var provinceLen = addressData.length;//有多少个省份
+        tools.each_fun(0, provinceLen, function (i) {
+            if (addressData[i].name == province) {
+                var cityLen = addressData[i].cities.length;
+                tools.each_fun(0, cityLen, function (j) {
+                    var opt = document.createElement('option');
+                    opt.text = addressData[i].cities[j].name;
+                    opt.value = addressData[i].cities[j].name;
+                    oDom.city.appendChild(opt);
+                })
+            }
+        })
+    }
+    //城市选择事件
+    function cityChange() {
+        oDom.area.innerHTML = '<option value="0">请选择</option>';//清空地区下拉框数据
+        var pIndex = oDom.province.selectedIndex;//获取选中省份option下标
+        var province = oDom.province.options[pIndex].value;//获取选中省份
+        var cIndex = oDom.city.selectedIndex;//获取选中城市option下标
+        var city = oDom.city.options[cIndex].value;//获取选中城市
+        var provinceLen = addressData.length;
+        tools.each_fun(0, provinceLen, function (i) {
+            if (addressData[i].name == province) {
+                var cityLen = addressData[i].cities.length;
+                tools.each_fun(0, cityLen, function (j) {
+                    if (addressData[i].cities[j].name == city) {
+                        var areaLen = addressData[i].cities[j].districts.length;
+                        tools.each_fun(0, areaLen, function (k) {
+                            var opt = document.createElement('option');
+                            opt.text = addressData[i].cities[j].districts[k].name;
+                            opt.value = addressData[i].cities[j].districts[k].name;
+                            oDom.area.appendChild(opt);
+                        })
+                    }
+                })
+            }
+        })
+    }
+    //文档加载完成初始化
+    window.onload = function (ev) {
+        init();
+    }
+</script>
+</body>
+</html>

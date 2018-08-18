@@ -1,4 +1,4 @@
-[
+var addressData = [
   {
     "code": "110000",
     "name": "北京市",

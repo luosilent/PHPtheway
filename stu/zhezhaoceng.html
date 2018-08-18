@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <style type="text/css">
+        .mask {
+            position: absolute; top: 0px; filter: alpha(opacity=60); background-color: #777;
+            z-index: 1002; left: 0px;
+            opacity:0.5; -moz-opacity:0.5;
+        }
+    </style>
+</head>
+<div id="divimg"><img src="../img/default.jpg" id="megimg" ></div>
+<div id="mask" class="mask"></div>
+<body>
+<script>
+    //显示遮罩层
+
+    $("#divimg").click(function(){
+        $("#mask").css("height",$(document).height());
+        $("#mask").css("width",$(document).width());
+        $("#mask").show();
+        var large_image = '<img style="align-content: center" src="../img/CSS.png" />';
+        $('#divimg').html($(large_image).animate(200));
+        $('#divimg').css({
+            "z-index": "10000"
+        });
+
+    })
+    $('#mask').click(function() {
+        $(this).toggle();
+        var large_image = '<img style="align-content: center" src="../img/default.jpg" />';
+        $('#divimg').html($(large_image).animate(200));
+    });
+    //隐藏遮罩层
+    function hideMask(){
+
+        $("#mask").hide();
+    }
+
+</script>
+</body>
+</html>

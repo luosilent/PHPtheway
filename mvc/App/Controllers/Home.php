@@ -21,7 +21,7 @@ class Home extends Controller
         View::renderTemplate(
             'Home/index.html',
             [
-                'name'   => 'baiyinnamula',
+                'name'   => 'luo silent',
                 'colors' => ['red', 'green', 'blue']
             ]
         );

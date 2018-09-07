@@ -22,7 +22,7 @@ class Home extends Controller
             'Home/index.html',
             [
                 'name'   => 'luo silent',
-                'colors' => ['red', 'green', 'blue']
+                'colors' => ['white', 'black', 'blue']
             ]
         );
     }

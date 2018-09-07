@@ -1,0 +1,16 @@
+[12-Jun-2018 09:25:12 UTC] Uncaught exception: 'Exception' with message 'test error'
+Stack trace: #0 [internal function]: App\Controllers\Home->indexAction()
+#1 C:\Users\Administrator\Code\MVC\Core\Controller.php(45): call_user_func_array(Array, Array)
+#2 C:\Users\Administrator\Code\MVC\Core\Router.php(111): Core\Controller->__call('index', Array)
+#3 C:\Users\Administrator\Code\MVC\Core\Router.php(111): App\Controllers\Home->index()
+#4 C:\Users\Administrator\Code\MVC\public\index.php(34): Core\Router->dispatch('')
+#5 {main}
+Thrown in 'C:\Users\Administrator\Code\MVC\App\Controllers\Home.php' on line 19
+[12-Jun-2018 09:35:11 UTC] Uncaught exception: 'Exception' with message 'No route matched'
+Stack trace: #0 C:\Users\Administrator\Code\MVC\public\index.php(34): Core\Router->dispatch('posts/index11')
+#1 {main}
+Thrown in 'C:\Users\Administrator\Code\MVC\Core\Router.php' on line 122
+[12-Jun-2018 09:35:11 UTC] Uncaught exception: 'Exception' with message 'No route matched'
+Stack trace: #0 C:\Users\Administrator\Code\MVC\public\index.php(34): Core\Router->dispatch('robots.txt')
+#1 {main}
+Thrown in 'C:\Users\Administrator\Code\MVC\Core\Router.php' on line 122

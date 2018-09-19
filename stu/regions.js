@@ -1,7 +1,8 @@
-var addressData = [
+
+var addressData=[
   {
     "code": "110000",
-    "name": "北京市",
+    "name": "北京",
     "cities": [
       {
         "code": "110100",
@@ -77,7 +78,7 @@ var addressData = [
   },
   {
     "code": "120000",
-    "name": "天津市",
+    "name": "天津",
     "cities": [
       {
         "code": "120100",
@@ -153,7 +154,7 @@ var addressData = [
   },
   {
     "code": "130000",
-    "name": "河北省",
+    "name": "河北",
     "cities": [
       {
         "code": "130100",
@@ -921,7 +922,7 @@ var addressData = [
   },
   {
     "code": "140000",
-    "name": "山西省",
+    "name": "山西",
     "cities": [
       {
         "code": "140100",
@@ -1469,7 +1470,7 @@ var addressData = [
   },
   {
     "code": "150000",
-    "name": "内蒙古自治区",
+    "name": "内蒙古",
     "cities": [
       {
         "code": "150100",
@@ -1959,7 +1960,7 @@ var addressData = [
   },
   {
     "code": "210000",
-    "name": "辽宁省",
+    "name": "辽宁",
     "cities": [
       {
         "code": "210100",
@@ -2449,7 +2450,7 @@ var addressData = [
   },
   {
     "code": "220000",
-    "name": "吉林省",
+    "name": "吉林",
     "cities": [
       {
         "code": "220100",
@@ -2749,7 +2750,7 @@ var addressData = [
   },
   {
     "code": "230000",
-    "name": "黑龙江省",
+    "name": "黑龙江",
     "cities": [
       {
         "code": "230100",
@@ -3345,7 +3346,7 @@ var addressData = [
   },
   {
     "code": "310000",
-    "name": "上海市",
+    "name": "上海",
     "cities": [
       {
         "code": "310100",
@@ -3421,7 +3422,7 @@ var addressData = [
   },
   {
     "code": "320000",
-    "name": "江苏省",
+    "name": "江苏",
     "cities": [
       {
         "code": "320100",
@@ -3889,7 +3890,7 @@ var addressData = [
   },
   {
     "code": "330000",
-    "name": "浙江省",
+    "name": "浙江",
     "cities": [
       {
         "code": "330100",
@@ -4317,7 +4318,7 @@ var addressData = [
   },
   {
     "code": "340000",
-    "name": "安徽省",
+    "name": "安徽",
     "cities": [
       {
         "code": "340100",
@@ -4839,7 +4840,7 @@ var addressData = [
   },
   {
     "code": "350000",
-    "name": "福建省",
+    "name": "福建",
     "cities": [
       {
         "code": "350100",
@@ -5239,7 +5240,7 @@ var addressData = [
   },
   {
     "code": "360000",
-    "name": "江西省",
+    "name": "江西",
     "cities": [
       {
         "code": "360100",
@@ -5711,7 +5712,7 @@ var addressData = [
   },
   {
     "code": "370000",
-    "name": "山东省",
+    "name": "山东",
     "cities": [
       {
         "code": "370100",
@@ -6367,7 +6368,7 @@ var addressData = [
   },
   {
     "code": "410000",
-    "name": "河南省",
+    "name": "河南",
     "cities": [
       {
         "code": "410100",
@@ -7113,7 +7114,7 @@ var addressData = [
   },
   {
     "code": "420000",
-    "name": "湖北省",
+    "name": "湖北",
     "cities": [
       {
         "code": "420100",
@@ -7633,7 +7634,7 @@ var addressData = [
   },
   {
     "code": "430000",
-    "name": "湖南省",
+    "name": "湖南",
     "cities": [
       {
         "code": "430100",
@@ -8211,7 +8212,7 @@ var addressData = [
   },
   {
     "code": "440000",
-    "name": "广东省",
+    "name": "广东",
     "cities": [
       {
         "code": "440100",
@@ -8835,7 +8836,7 @@ var addressData = [
   },
   {
     "code": "450000",
-    "name": "广西壮族自治区",
+    "name": "广西",
     "cities": [
       {
         "code": "450100",
@@ -9369,7 +9370,7 @@ var addressData = [
   },
   {
     "code": "460000",
-    "name": "海南省",
+    "name": "海南",
     "cities": [
       {
         "code": "460100",
@@ -9589,7 +9590,7 @@ var addressData = [
   },
   {
     "code": "500000",
-    "name": "重庆市",
+    "name": "重庆",
     "cities": [
       {
         "code": "500100",
@@ -9753,7 +9754,7 @@ var addressData = [
   },
   {
     "code": "510000",
-    "name": "四川省",
+    "name": "四川",
     "cities": [
       {
         "code": "510100",
@@ -10617,7 +10618,7 @@ var addressData = [
   },
   {
     "code": "520000",
-    "name": "贵州省",
+    "name": "贵州",
     "cities": [
       {
         "code": "520100",
@@ -11029,7 +11030,7 @@ var addressData = [
   },
   {
     "code": "530000",
-    "name": "云南省",
+    "name": "云南",
     "cities": [
       {
         "code": "530100",
@@ -11647,7 +11648,7 @@ var addressData = [
   },
   {
     "code": "540000",
-    "name": "西藏自治区",
+    "name": "西藏",
     "cities": [
       {
         "code": "540100",
@@ -11991,7 +11992,7 @@ var addressData = [
   },
   {
     "code": "610000",
-    "name": "陕西省",
+    "name": "陕西",
     "cities": [
       {
         "code": "610100",
@@ -12485,7 +12486,7 @@ var addressData = [
   },
   {
     "code": "620000",
-    "name": "甘肃省",
+    "name": "甘肃",
     "cities": [
       {
         "code": "620100",
@@ -12923,7 +12924,7 @@ var addressData = [
   },
   {
     "code": "630000",
-    "name": "青海省",
+    "name": "青海",
     "cities": [
       {
         "code": "630100",
@@ -13149,7 +13150,7 @@ var addressData = [
   },
   {
     "code": "640000",
-    "name": "宁夏回族自治区",
+    "name": "宁夏",
     "cities": [
       {
         "code": "640100",
@@ -13273,7 +13274,7 @@ var addressData = [
   },
   {
     "code": "650000",
-    "name": "新疆维吾尔自治区",
+    "name": "新疆",
     "cities": [
       {
         "code": "650100",
@@ -13837,14 +13838,14 @@ var addressData = [
   },
   {
     "code": "710000",
-    "name": "台湾省"
+    "name": "台湾"
   },
   {
     "code": "810000",
-    "name": "香港特别行政区"
+    "name": "香港"
   },
   {
     "code": "820000",
-    "name": "澳门特别行政区"
+    "name": "澳门"
   }
 ]

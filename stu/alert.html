@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>模拟alert和confirm提示框</title>
+</head>
+<body>
+<input id="add" type="button" value="添加"/>
+<input id="update" type="button" value="修改"/>
+
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
+<script src="myalert.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $("#add").bind("click", function () {
+
+        zdalert('生意宝提示', '收藏成功', function () {
+
+            //要回调的方法
+            window.location.href = "http://www.baidu.com"
+        });
+
+    });
+
+
+    //也可以传方法名 test
+    $("#update").bind("click", function () {
+
+
+        // $.MsgBox.Confirm("温馨提示", "确定要进行修改吗？", test);
+
+        zdconfirm('系统确认框', '你确认提交该条数据吗', function (r) {
+            if (r) {
+                //...点确定之后执行的内容
+
+                window.location.href = "http://www.baidu.com"
+            }
+        });
+
+
+    });
+
+
+</script>
+</body>

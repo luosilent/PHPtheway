@@ -86,10 +86,10 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="生意社">
+      <paths name="生意宝">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="" local="F:/code/phpstrom/shengyibao" web="/" />
           </mappings>
         </serverdata>
       </paths>

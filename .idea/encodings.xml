@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
-    <file url="PROJECT" charset="GBK" />
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/img/CSS.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/img/default.jpg" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stu/imgUp.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stu/p012.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stu/regions.js" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
